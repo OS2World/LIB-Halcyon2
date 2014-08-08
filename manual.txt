@@ -1,0 +1,3633 @@
+
+
+
+
+
+
+
+
+
+
+
+                               BASIC DOCUMENTATION
+
+
+
+                                  ÚÄÄÄÄÄÄÄÄÄÄÄ¿
+                                  ³  HALCYON  ³
+                                  ÀÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                                   Version 3.0
+
+
+
+                                GRIFFIN SOLUTIONS
+
+
+                         dBase III, IV Access Routines
+                               Using Turbo Pascal
+
+
+
+
+
+
+
+                                12 August 1993
+
+             (C) Copyright 1991,1992, 1993 - All Rights reserved
+
+
+
+
+
+
+
+
+
+                             Griffin Solutions
+                          102 Molded Stone Place
+                       Warner Robins, Georgia 31088
+                          Voice: (912) 953-2680
+                          Fax:   (912) 953-5517
+                          CompuServe: 75206.231
+                    The Consultant BBS: (718) 837 3236
+
+
+                                     ------
+                                     NOTICE
+                                     ------
+
+
+
+HALCYON IS COPYRIGHTED, ALL RIGHTS RESERVED.  AS SHAREWARE, HALCYON MAY BE
+COPIED AND SHARED WITH OTHERS.  HOWEVER, TO PROTECT THE QUALITY OF THE
+DISTRIBUTION OF THIS PROGRAM AND TO SUPPORT FUTURE DEVELOPMENT CERTAIN
+LIMITATIONS APPLY.  COPIES OF HALCYON MAY BE MADE FOR TRIAL USE BY OTHERS ON
+A PRIVATE NON-COMMERCIAL BASIS ONLY.  HALCYON MAY NOT BE RE-SOLD UNDER ANY
+CONDITIONS.  AS A REGISTERED USER, YOU MAY DISTRIBUTE COMPILED HALCYON
+ROUTINES IN CONNECTION WITH ANY OTHER PRODUCT OR SERVICE.
+
+THIS SOFTWARE WILL PERFORM AS DESCRIBED HEREIN ONLY IF PROPERLY APPLIED.
+OUR LIABILITY TO YOU IS LIMITED TO REPLACING THE SOFTWARE (FOR REGISTERED
+USERS).  WE HAVE NO LIABILITY TO YOU FOR ANY DAMAGE OR LOSS, INCLUDING
+SPECIAL, INCIDENTAL, OR CONSEQUENTIAL, CAUSED BY THIS SOFTWARE, DIRECTLY OR
+INDIRECTLY.  YOU AGREE TO THE TERMS OF THIS LICENSE BY YOUR DECISION TO USE
+THIS SOFTWARE.
+
+
+
+
+
+
+Technical support is available through the following sources:
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ Mail: Griffin Solutions                 ³   Telephone: (912) 953-2680   ³
+³       102 Molded Stone Place            ³   Fax:   (912) 953-5517       ³
+³       Warner Robins, Georgia 31088, USA ³   CompuServe: 75206.231       ³
+ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+³  The Consultant BBS, at 718-837-3236, supporting v32bis/HST at speeds   ³
+³  from 1200 to 16.8Kbps.  This 4-node ASP-approved BBS features author-  ³
+³  direct shareware.                                                      ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+
+                             Griffin Solutions
+                            Basic Documentation
+
+                             Table of Contents
+
+                               Introduction
+
+Features . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . v
+Shareware. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . v
+Getting Started. . . . . . . . . . . . . . . . . . . . . . . . . . . . . vi
+   Distribution Files. . . . . . . . . . . . . . . . . . . . . . . . . . vi
+   Installation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . viii
+   Creating Files. . . . . . . . . . . . . . . . . . . . . . . . . . . . viii
+   Switches and Defines. . . . . . . . . . . . . . . . . . . . . . . . . viii
+      Numeric Fields ($N+,E+). . . . . . . . . . . . . . . . . . . . . . viii
+      Defining Clipper Indexes . . . . . . . . . . . . . . . . . . . . . ix
+   Demonstration . . . . . . . . . . . . . . . . . . . . . . . . . . . . ix
+Changes to Version 3.0 . . . . . . . . . . . . . . . . . . . . . . . . . x
+Order Form . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . xi
+
+           High Level Functions/Procedures Functional Listing
+
+Primary Database Handling Routines . . . . . . . . . . . . . . . . . . .  1
+File Management Routines . . . . . . . . . . . . . . . . . . . . . . . .  1
+dBase Index Handling Routines. . . . . . . . . . . . . . . . . . . . . .  2
+dBase Memo Handling Routines . . . . . . . . . . . . . . . . . . . . . .  2
+dBase Field Handling Routines. . . . . . . . . . . . . . . . . . . . . .  2
+String Handling Routines . . . . . . . . . . . . . . . . . . . . . . . .  3
+Date Routines. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3
+Status and Error Reporting Routines. . . . . . . . . . . . . . . . . . .  4
+Default Hook Routines. . . . . . . . . . . . . . . . . . . . . . . . . .  4
+
+                          Technical Reference
+
+AllCaps. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5
+AssignMemo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5
+Alias. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5
+ALock. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5
+Append . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5
+ClearRecord. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+CloseDataBases . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+CopyStructure. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+CopyTo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+CnvAscToStr. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+CnvStrToAsc. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7
+CTOD . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7
+CurrentArea. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7
+Date . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  8
+DateGet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  8
+DateGetN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  8
+DatePut. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  8
+DatePutN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  8
+DBF. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  9
+DBFError . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  9
+
+                                      i
+Griffin Solutions
+
+
+dBOF . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  9
+Deleted. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  9
+DeleteRec. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  9
+dEOF . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+DTOC . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+DTOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+Field. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+FieldCount . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+FieldDec . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+FieldGet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+FieldGetN. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+FieldLen . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+FieldNo. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+FieldPut . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+FieldPutN. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+FieldType. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+FileExist. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+Find . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+FLock. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+FlushDBF . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+Found. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+Go . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+GoBottom . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+GoTop. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+Index. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+IndexOn. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+LogicGet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+LogicGetN. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+LogicPut . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+LogicPutN. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+MemoClear. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+MemoGet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+MemoGetLine. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+MemoGetN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+MemoInsLine. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+MemoLines. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+MemoPut. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+MemoPutN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+MemoWidth. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+NumberGet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+NumberGetN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+NumberPut. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+NumberPutN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+Pack . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+PadL . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+PadR . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+RecallRec. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+RecCount . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+RecNo. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+RecSize. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+Reindex. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+Replace. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+
+                                      ii
+                                                             Griffin Solutions
+
+RLock. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+SaveMemo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+Select . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+SetCenturyOff. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+SetCenturyOn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+SetDateStyle . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+SetDBFCacheOff . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+SetDBFCacheOn. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+SetDeletedOff. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+SetDeletedOn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+SetErrorCapture. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+SetExactOff. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+SetExactOn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+SetExclusiveOff. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+SetExclusiveOn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+SetFileHandles . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+SetFilterThru. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+SetFlushOff. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+SetFlushOnAppend . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+SetFlushOnWrite. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+SetFormulaProcess. . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+SetLockOff . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+SetLockOn. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+SetOrderTo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+SetStatusCapture . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+Skip . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+SortTo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+StrCompare . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+StrDate. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+StringGet. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+StringGetN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+StringPut. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+StringPutN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+StripChar. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+Strip_Flip . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+StrLogic . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+StrNumber. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+StrWholeNum. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+SubStr . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+TrimL. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+TrimR. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+Unique_Field . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+UnLock . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+UnLockAll. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+Use. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+ValDate. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+ValLogic . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+ValNumber. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+ValWholeNum. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+Zap. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+
+                               Error Codes
+
+Error List . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+                                     iii
+Griffin Solutions
+
+
+                         Demonstration Programs
+
+DBase File Creator             [GSDMO_01.PAS]. . . . . . . . . . . . . . 38
+DBase File Lister              [GSDMO_02.PAS]. . . . . . . . . . . . . . 38
+DBase File Formated Lister     [GSDMO_03.PAS]. . . . . . . . . . . . . . 38
+DBase File Updating            [GSDMO_04.PAS]. . . . . . . . . . . . . . 39
+DBase File Appending           [GSDMO_05.PAS]. . . . . . . . . . . . . . 39
+DBase File Indexing            [GSDMO_06.PAS]. . . . . . . . . . . . . . 39
+DBase Memo File Lister         [GSDMO_07.PAS]. . . . . . . . . . . . . . 41
+DBase File Structure Lister    [GSDMO_08.PAS]. . . . . . . . . . . . . . 41
+DBase Index Creator            [GSDMO_09.PAS]. . . . . . . . . . . . . . 41
+DBase Multiple Indexes         [GSDMO_10.PAS]. . . . . . . . . . . . . . 42
+DBase Relational File Maker    [GSDMO_11.PAS]. . . . . . . . . . . . . . 42
+DBase Relational File Linkage  [GSDMO_12.PAS]. . . . . . . . . . . . . . 43
+DBase Relational File Linkage  [GSDMO_13.PAS]. . . . . . . . . . . . . . 44
+DBase File Maker               [GSDMO_14.PAS]. . . . . . . . . . . . . . 44
+DBase File and Memo Builder    [GSDMO_15.PAS]. . . . . . . . . . . . . . 44
+DBase File/Memo Editor (Ext)   [GSDMO_16.PAS]. . . . . . . . . . . . . . 44
+DBase Status Checker           [GSDMO_17.PAS]. . . . . . . . . . . . . . 45
+DBase Error Handler            [GSDMO_18.PAS]. . . . . . . . . . . . . . 46
+DBase File Sorting             [GSDMO_19.PAS]. . . . . . . . . . . . . . 47
+DBase Reindexing               [GSDMO_20.PAS]. . . . . . . . . . . . . . 47
+DBase Copy File & Structure    [GSDMO_21.PAS]. . . . . . . . . . . . . . 47
+Getting More Files Open        [GSDMO_22.PAS]. . . . . . . . . . . . . . 47
+DBase Filters                  [GSDMO_23.PAS]. . . . . . . . . . . . . . 48
+DBase Editor                   [GSDMO_ED.PAS]. . . . . . . . . . . . . . 49
+DBase Viewer                   [GSDMO_VU.PAS]. . . . . . . . . . . . . . 49
+DBase File Display             [GSDMOTV1.PAS]. . . . . . . . . . . . . . 49
+DBase File Display             [GSDMOTV2.PAS]. . . . . . . . . . . . . . 50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      iv
+                                                             Griffin Solutions
+
+
+                                 INTRODUCTION
+
+
+FEATURES
+
+Welcome to HALCYON, a series of Turbo Pascal routines for management of
+dBase III and IV files.  The routines are designed to do the following:
+
+  - Provide a simple user interface to read and write dBase III and IV
+files in a network environment.
+
+  - Allow creation, use and updating of multiple dBase .NDX index files in
+reading and updating the dBase III and IV data (DBF) files.  The .MDX index
+files are not supported (This may change if demand warrants).
+
+  - Allow creation, use and updating of multiple Clipper .NTX index files
+in reading and updating the dBase III data (DBF) files.
+
+  - Allow reading and updating of .DBT memo file entries.
+
+  - Allow creation of new dBase III or IV files.  These routines will work
+with either dBase III and IV memo file structures.  However, these formats
+are not interchangeable.
+
+  - Provide expanded routines to display, edit, and update dBase files.
+
+  - Provide a file handler interface that provides a simple disk management
+capability including file sharing for LANs.
+
+  -  Allow operation under all versions of Object Oriented Turbo Pascal,
+including Turbo Pascal for Windows.
+
+  - Do all of the above using only Turbo Pascal--no assembly routines are
+used.
+
+  - Apply Object Oriented Programming to create easily usable modules.
+
+One significant difference between version 3.0 and previous releases is the
+elimination of Griffin Solutions unique window routines.  These were mainly
+included to allow demonstration of the routines and were not intended to be
+central to the database engine routines.  They have been eliminated to allow
+better interface to MicroSoft Windows and Borland TurboVision, as well as
+the many commercial, shareware, and public domain windowing packages.  If
+there is enough demand, the old window routines will be dusted off, polished
+up, and provided as a separate package at minimal cost.
+
+
+SHAREWARE
+
+HALCYON is copyrighted. It is not a public domain program.  It is being
+distributed as Shareware, which means that unmodified copies of the software
+and documentation may be freely copied and shared.  I ask in return that
+
+
+                                      v
+Griffin Solutions
+
+
+should you find HALCYON to be useful, you become a registered user.  You
+become registered by filling out the order form at the end of this paper
+and including a check for $89.95. For your convenience, the order form is
+included as a separate file as well (ORDER.FRM).  Alternatively, you may
+order online through CompuServe.  Type GO SWREG, and register Software
+Registration Number 765.
+
+By registering you will get:
+
+        o  The right to use the Griffin Solutions routines in your
+           programs, including any commercial application.  (This
+           right does not extend to distributing the Griffin Solutions
+           source code.  However, executable code may be freely dis-
+           tributed)
+
+        o  A copy of the latest version of the program.
+
+        o  Automatic notification of major program updates.
+
+        o  Technical support (one year).
+
+        o  A printed user's manual.
+
+The shareware philosophy is to pay smaller amounts for well-crafted and
+useful software from developers who cannot spend the millions of dollars on
+marketing necessary to compete with the large software development
+companies.  You benefit by being able to try a wider variety of software
+products to find the ones that suit your particular purpose. And the trial
+is free. The shareware developer benefits from being able to distribute his
+work to a wider audience than would be possible through normal channels.
+
+Your share of the responsibility for shareware to continue, and to support
+the development of more and better products is to distribute your shareware
+programs to others and become a registered user of those products you like
+and use.
+
+
+GETTING STARTED
+
+This section will acquaint you with the files on the distribution disk and
+show you a demonstration to quickly see what HALCYON can accomplish.
+
+Distribution Files
+
+The following programs should be on the accompanying disk:
+
+
+HALCYON Units:
+--------------
+                GS_BUILD.PAS     TPU Builder
+                GSOBSHEL.PAS     Primary user interface to HALCYON
+                GSOB_DBF.PAS     Basic dBase file handling routines
+
+
+                                      vi
+                                                             Griffin Solutions
+
+
+                GSOB_DBS.PAS     Advanced dBase routines
+                GSOB_DSK.PAS     Disk I/O routines
+                GSOB_DTE.PAS     Date handling routines
+                GSOB_EDT.PAS     Editor routines (non-Windows)
+                GSOB_FLP.PAS     Floating point conversion
+                GSOB_GEN.PAS     Generate test dBase files
+                GSOB_INX.PAS     Virtual table routines
+                GSOB_MMO.PAS     Memo file routines
+                GSOB_NDX.PAS     Index routines (dBase .NDX)
+                GSOB_NTX.PAS     Index routines (Clipper .NTX)
+                GSOB_OBJ.PAS     Basic object structures
+                GSOB_STR.PAS     String handling routines
+                GSOB_VAR.PAS     Global variables
+                GSV_FLDS.PAS     Field handling for TurboVision
+                GSXT_BRO.PAS     File Browser Unit
+                GSXT_SCH.PAS     File Searcher Unit
+
+Text Files:
+-----------
+                CHANGES .TXT     Latest version changes
+                GS_HELP .ASC     Basic Documentation for HALCYON
+                ORDER   .FRM     Registration Form
+                READ    .ME      Quick introduction file
+                TESTDATA.FIL     Data to construct test files
+                WISDOM  .FIL     Quotes to construct memo records
+
+
+Demonstration Files:
+--------------------
+                GSDMO_01.PAS     DBase File Creator
+                GSDMO_02.PAS     DBase File Lister
+                GSDMO_03.PAS     DBase File Formated Lister
+                GSDMO_04.PAS     DBase File Updating
+                GSDMO_05.PAS     DBase File Appending
+                GSDMO_06.PAS     DBase File Indexing
+                GSDMO_07.PAS     DBase Memo File Lister
+                GSDMO_08.PAS     DBase File Structure Lister
+                GSDMO_09.PAS     DBase Index Creator
+                GSDMO_10.PAS     DBase Multiple Indexes
+                GSDMO_11.PAS     DBase Relational File Maker
+                GSDMO_12.PAS     DBase Relational File Linkage
+                GSDMO_13.PAS     DBase Relational File Linkage
+                GSDMO_14.PAS     DBase File Maker
+                GSDMO_15.PAS     DBase File and Memo Builder
+                GSDMO_16.PAS     DBase File/Memo Editor (External)
+                GSDMO_17.PAS     DBase Status Checker
+                GSDMO_18.PAS     DBase Error Handler
+                GSDMO_19.PAS     DBase File Sorting
+                GSDMO_20.PAS     DBase Reindexing
+                GSDMO_21.PAS     DBase Copy File and Structure
+                GSDMO_22.PAS     Getting More Files Open
+                GSDMO_23.PAS     DBase Filters
+
+
+                                     vii
+Griffin Solutions
+
+Demonstration Files (Other Than dBase Engine):
+----------------------------------------------
+
+                GSDMO_ED.PAS     DBase Editor
+                GSDMO_VU.PAS     DBase Viewer
+                GSDMOTV1.PAS     DBase File Display
+                GSDMOTV2.PAS     DBase File Display
+                SHOWOFF .EXE     Demonstration program
+                SHOWOFF .PAS     Demonstration program source
+                SMPLSTUF.PAS     Extra screen display routines
+                TESTBROW.PAS     File Browser Demonstration
+                TESTFIND.PAS     Record Finder Demonstration
+                TESTFRM1.PAS     User-assigned Formulas for Indexes (#1)
+                TESTFRM2.PAS     User-assigned Formulas for Indexes (#2)
+                TESTPICK.PAS     Using a Pick List for dBase Records
+                TESTSCH1.PAS     Searching a dBase File for Key Word
+                TESTSCH2.PAS     Searching with Progress Reporting
+                TUTOR1  .DBF     Demonstration sample dBase File
+                XTRASTUF.PAS     Extra dBAse field display routines
+
+
+External Editor Files:  (Public domain, used to show external editor call)
+----------------------
+
+                TE      .DOC     TE 2.5 User's Guide (10 pages)
+                TE      .EXE     The actual Text Editor program
+                TEG     .HLP     TE 2.5 Command Summary (1 page)
+                TEMOD   .EXE     Utility to change TE.EXE options
+                TEREAD  .1ST     Information file
+
+
+ Installation
+
+ Installation consists of copying these files to your hard disk.  The basic
+ documentation may be printed by typing 'COPY GS_HELP.ASC PRN' at the DOS
+ prompt.  It is formatted for 8.5" X 11" paper and 10-pitch font.
+
+ Creating Files
+
+ File creation routines are not part of the shell routines.  Although file
+ structure creation is very simple, it does require the use of an object.
+ An example of how to create a file is demonstrates in GSDMO_14.PAS.
+
+ Switches and Defines
+
+ Numeric Fields ($N+,E+)
+
+ Numeric fields may be read into your program as real values to allow
+ them to be used for calculation.  Although the precision of a real value
+ is smaller than the extended type (11-12 significant digits vice 19-20
+ digits) used in dBase, it is completely sufficient for most applications.
+
+ If you need the extra precision of 19-20 digits, these routines will
+ adjust automatically.  Routines using real numbers have been modified to
+
+                                      viii
+                                                              Griffin Solutions
+
+ be of type FloatNum.  FloatNum is in unit GSOB_VAR.PAS, and will
+ automatically adapt to real or extended type.  To allow numbers to have
+ up to 20 significant digits the $N+ and $E+ switches must be set (Alt
+ O,C,8,E in the IDE).  Otherwise, 11-12 digits will be used.  The use of
+ the $N+,E+ switch adds 10K to program size.  You must rebuild all unit
+ TPUs when the option is changed to cause them to be recompiled with the
+ new switch settings.
+
+ In the command line compiler use the /$N+/$E+ switch settings.  For
+ example:
+
+            TPC MyProg /$N+/$E+/B
+
+ When you compile a program in the $N+,E+ state, the compiler links with
+ the full 80x87 emulator.  The resulting .EXE file can be run on any
+ machine, regardless of whether that machine has an 80x87. If an 80x87 is
+ present, the program will use it; otherwise, the run-time library
+ emulates it.  This gives you access to four additional real types:
+ Single, Double, Extended, and Comp.  The $E+ directive will emulate the
+ 80x87. This gives you access to the IEEE floating-point types without
+ requiring that you install an 80x87 chip.
+
+ Defining Clipper Indexes
+
+ Halcyon can handle Clipper index (.NTX) operations.  The unit
+ GSOB_NTX.PAS will be substituted for the GSOB_NDX.pas by adding a
+ conditional define to the complier options.  In the IDE this is done in
+ the Options|Compile menu, selecting Conditional Define, and adding
+ CLIPPER as a Define item.  You must then recompile using the
+ Compile|Build option to force recompilation of units that will use
+ the index.
+
+ In the command line compiler use the /D option, for example:
+
+      TPC MyProg /DCLIPPER/B
+
+ That's the only change necessary to replace .NDX indexes with Clipper
+ .NTX indexes.
+
+
+ Demonstration
+
+ You can run SHOWOFF.EXE to get an immediate feel for the capabilities in
+ the HALCYON library of routines.  The source is also included.  This
+ program is a data file browser/editor that is very useful for examining the
+ data files that are created and modified in the remaining demonstration
+ programs.
+
+ 1.  Execute the program, and look at the screen display.  You have a
+     choice of File, Index, Edit, Append, Browse, and Quit.  You must
+     select File before any other choice (except Quit) can be selected.
+
+ 2.  By pressing Return with File highlighted, a directory of all .DBF
+     files will be displayed, along with the other directories and drives
+
+                                  ix
+Griffin Solutions
+
+     that may be selected.  Choose a file.  If you don't have any, you
+     can use TUTOR1.DBF, included with these files.
+
+ 3.  Once a file is selected, an existing index (.NDX) file can be chosen
+     if it exists.  This is done through the Index selection.
+
+ 4.  You may now Edit, Append, or Browse the file.  Help information is
+     for these functions is available by pressing F1 in the function.
+
+ 5.  A new file may be opened by returning to the File menu selection.
+
+ To get the feeling of the speed and features of HALCYON, run the set of
+ demonstration programs starting with GSDMO_01.PAS.  These are described in
+ the basic documentation and within the source program itself.
+
+
+ CHANGES
+
+ Major changes in HALCYON Version 3.0:
+ ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+      -  A new user interface is included that makes the 'object' part of
+ object oriented programming transparent.  The programmer simply uses a
+ set of commands similar to the dBase commands to control the file access.
+
+      -  The routines work under all versions of Turbo Pascal from 5.5 on
+ through 7.0.  The routines work equally well in Turbo Pascal for windows.
+ Routines will work in real or protected mode.
+
+      -  File sharing is allowed in network environments.
+
+      -  More than 15 files can be used at the same time by using a command
+ to increase the number of files available.
+
+      -  File sorting is allowed.
+
+      -  File copying, and copying of the file structure only, is allowed.
+
+      -  File filters are permitted by hooking user routines to file reads.
+ The user interface required to set up the hook is minimal.
+
+      -  Index processing is much faster in version 3.0.
+
+      -  Reindexing has been added to simplify Pack operations.  All open
+ index files are reindexed automatically upon a call to Reindex.
+
+      -  The number of indexes allowed per file is increased to 64.  This
+ can be changed by the programmed.
+
+      -  The user has the ability to hook status and error reports to take
+ whatever actions are needed.
+
+      - Routines used for conversion to/from numbers have been modified to
+ be of type FloatNum.  This allows up to 20 significant digits.
+
+                                      x
+                                                             Griffin Solutions
+
+
+
+
+
+                            ORDER/REGISTRATION FORM
+
+        Quan.        Program               Unit Price         Total
+
+        ____         HALCYON  Ver 3.0        $89.95          _______
+
+        ____         HALCYON  Ver 3.0        $25.00          _______
+                     (Upgrade for Registered Users of)
+                     (GS_dBase 2.8 and earlier       )
+
+        ____         GS_DBASE Ver 2.9        $25.00          _______
+
+
+                     Overseas Shipping        $5.00          _______
+
+
+                                            Total:           _______
+
+             _____  I have included a check for  :           _______
+
+        (Canadians send Canadian POSTAL MONEY ORDER made payable in US $.)
+
+
+
+        DISK SIZE (circle one):        5.25" (360K)      3.5"  (720K)
+                                       5.25" (1.2M)      3.5"  (1.4M)
+
+
+        ** Includes one year free support, current diskette w/manual on disk.
+
+        YOUR NAME: ________________________ COMPANY:  _____________________
+
+        ADDRESS: __________________________________________________________
+
+        CITY: _____________________________ STATE: ____   ZIP: ____________
+
+        DAY TIME PHONE (in case of questions):  ___________________________
+
+        How did you hear about this program? :  ___________________________
+
+                        THANK YOU FOR SUPPORTING SHAREWARE!
+
+
+                                 Griffin Solutions
+                               102 Molded Stone Place
+                            Warner Robins, Georgia 31088
+                                Voice: (912) 953-2680
+                                Fax:   (912) 953-5517
+                                 CompuServe 75206.231
+                          The Consultant BBS: (718) 837 3236
+
+
+                                       xi
+                                                              Griffin Solutions
+
+
+
+                               Griffin Solutions
+                                  High Level
+                             Functions/Procedures
+
+
+                              Functional Listing
+
+ Primary Database Handling Routines:
+
+    Function   Alias : string;
+    Procedure  Append;
+    Procedure  ClearRecord;
+    Procedure  CloseDataBases;
+    Procedure  CopyStructure(filname : string);
+    Procedure  CopyTo(filname : string);
+    Function   CurrentArea : byte;
+    Function   DBF : string;
+    Function   DBFError : integer;
+    Function   dBOF : boolean;
+    Function   Deleted : boolean;
+    Procedure  DeleteRec;
+    Function   dEOF : boolean;
+    Procedure  Go(n : longint);
+    Procedure  GoBottom;
+    Procedure  GoTop;
+    Procedure  Pack;
+    Procedure  RecallRec;
+    Function   RecCount : longint;
+    Function   RecNo : longint;
+    Function   RecSize : word;
+    Procedure  Replace;
+    Procedure  Select(Obj : byte);
+    Procedure  SetDBFCacheOff;
+    Procedure  SetDBFCacheOn;
+    Procedure  SetDeletedOff;
+    Procedure  SetDeletedOn;
+    Procedure  SetExactOff;
+    Procedure  SetExactOn;
+    Procedure  SetFilterThru(UserRoutine : FilterCheck);
+    Procedure  SetFormulaProcess(UserRoutine1, UserRoutine2);
+    Procedure  Skip(n : longint);
+    Procedure  SortTo(filname, formla: string; sortseq: SortStatus);
+    Procedure  Use(FName : string);
+    Procedure  Zap;
+
+ File Management Routines:
+
+    Function   ALock : boolean;
+    Function   FileExist(FName : string) : boolean;
+    Function   FLock : boolean;
+
+
+
+
+                                       1
+ Griffin Solutions
+
+
+    Procedure  FlushDBF;
+    Function   RLock : boolean;
+    Procedure  SetExclusiveOff;
+    Procedure  SetExclusiveOn;
+    Procedure  SetFileHandles(hndls : byte);
+    Procedure  SetLockOff;
+    Procedure  SetLockOn;
+    Procedure  SetFlushOff;
+    Procedure  SetFlushOnAppend;
+    Procedure  SetFlushOnWrite;
+    Procedure  Unlock;
+    Procedure  UnlockAll;
+
+ dBase Index Handling Routines:
+
+    Procedure  Find(ss : string);
+    Function   Found : boolean;
+    Procedure  Index(INames : string);
+    Procedure  IndexOn(filname, formla : string);
+    Procedure  Reindex;
+    Procedure  SetOrderTo(order : integer);
+
+ dBase Memo Handling Routines:
+
+    Procedure  AssignMemo(st, nm : string);
+    Procedure  MemoClear;
+    procedure  MemoGet(st : string);
+    function   MemoGetLine(linenum : integer) : string;
+    procedure  MemoGetN(n : integer);
+    Procedure  MemoInsLine(linenum : integer; st : string);
+    function   MemoLines : integer;
+    procedure  MemoPut(st : string);
+    procedure  MemoPutN(n : integer);
+    Procedure  MemoWidth(l : integer);
+    Procedure  SaveMemo(st, nm : string);
+
+ dBase Field Handling Routines:
+
+    Function   DateGet(st : string) : longint;
+    Function   DateGetN(n : integer) : longint;
+    Procedure  DatePut(st : string; jdte : longint);
+    Procedure  DatePutN(n : integer; jdte : longint);
+    Function   Field(n : byte) : string;
+    Function   FieldCount : byte;
+    Function   FieldDec(n : byte) : byte;
+    Function   FieldGet(fnam : string) : string;
+    Function   FieldGetN(fnum : integer) : string;
+    Function   FieldLen(n : byte) : byte;
+    Function   FieldNo(fn : string) : byte;
+    Procedure  FieldPut(fnam, st : string);
+
+
+
+
+                                       2
+                                                              Griffin Solutions
+
+
+    Procedure  FieldPutN(fnum : integer; st : string);
+    Function   FieldType(n : byte) : char;
+    Function   LogicGet(st : string) : boolean;
+    Function   LogicGetN(n : integer) : boolean;
+    Procedure  LogicPut(st : string; b : boolean);
+    Procedure  LogicPutN(n : integer; b : boolean);
+    Function   NumberGet(st : string) : real;
+    Function   NumberGetN(n : integer) : real;
+    Procedure  NumberPut(st : string; r : real);
+    Procedure  NumberPutN(n : integer; r : real);
+    Function   StringGet(fnam : string) : string;
+    Function   StringGetN(fnum : integer) : string;
+    Procedure  StringPut(fnam, st : string);
+    Procedure  StringPutN(fnum : integer; st : string);
+
+ String Handling Routines:
+
+    Function   AllCaps(t : string) : string;
+    Procedure  CnvAscToStr(var asc, st; lth : integer);
+    Procedure  CnvStrToAsc(var st, asc; lth : integer);
+    Function   PadL(strn : string; lth : integer) : string;
+    Function   PadR(strn : string; lth : integer) : string;
+    Function   StrCompare(var s1,s2) : integer;
+    Function   StrDate(jul : longint) : string;
+    Function   StrNumber(num : real; lth,dec : integer) : string;
+    Function   StrWholeNum(num : longint; lth : integer) : string;
+    Function   StrLogic(tf : boolean) : string;
+    Function   Strip_Flip(st : string) : string;
+    Function   StripChar(ch : Char; st : string) : string;
+    Function   SubStr(s : string; b,l : integer) : string;
+    Function   TrimL(strn : string):string;
+    Function   TrimR(strn : string):string;
+    Function   Unique_Field : string;
+    Function   ValDate(strn : string) : longint;
+    Function   ValNumber(strn : string) : real;
+    Function   ValWholeNum(strn : string) : Longint;
+    Function   ValLogic(strn : string) : boolean;
+
+ Date Routines
+
+    Function   CTOD(strn : string) : longint;
+    Function   Date: longint;
+    Function   DTOC(jul : longint) : string;
+    Function   DTOS(jul : longint) : string;
+    Procedure  SetCenturyOff;
+    Procedure  SetCenturyOn;
+    Procedure  SetDateStyle(dt : DateTypes);
+
+
+
+
+
+
+
+                                       3
+ Griffin Solutions
+
+
+ Status and Error Reporting Routines:
+
+    Procedure  SetErrorCapture(UserRoutine : CaptureError);
+    Procedure  SetStatusCapture(UserRoutine : CaptureStatus);
+
+ Default Hook Routines
+
+    Procedure  DefCapError(Code, Info : integer);       (SetErrorCapture)
+    Procedure  DefCapStatus(stat1,stat2,stat3:longint);  (SetStatusCapture)
+    Function   DefFilterCk: boolean;                    (SetFilterThru)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       4
+                                                              Griffin Solutions
+
+
+
+                             Technical Reference
+
+
+ AllCaps                                                      Unit GSOB_Str
+       Function  AllCaps(var t : string) : string;
+
+       Function to convert a string to uppercase.  The string to be
+       converted is passed as an argument.  A string converted to
+       all  uppercase values is returned.
+
+
+ AssignMemo                                                   Unit GSOBShel
+      Procedure  AssignMemo(st, nm : string);
+
+      Reads the memo from field st of the current record of the current
+      file and writes it as a text file to file nm.
+
+
+ Alias
+      Function  Alias: string;                                Unit GSOBShel
+
+      Returnd the name of the currently selected database.  This differs
+      from DBF() in that only the file name, with no path or extension
+      is returned.
+
+
+ ALock                                                        Unit GSOBShel
+      Function  ALock: boolean;
+
+      Locks a file to prohibit any other user from adding new records while
+      the requesting user appends a record.  Other users can read/write to
+      the rest of the file during this time.
+
+      If successful, a true will be returned.  If unsuccessful, a false will
+      be returned and the error code will be found by a call to DBFError.
+      If file sharing is not on, the method will return true.
+
+      This routine uses the "dirty read" method by actually locking a record
+      region over one billion bytes above the actual file location.   Since
+       all Lock calls reference this same offset, other lock requests for
+      the same areas will be rejected, but file reads to the true record loc-
+      ation will be allowed.
+
+
+ Append                                                       Unit GSOBShel
+      Procedure  Append;
+
+      The procedure adds the current record to the end of the current file.
+      If file sharing is on the file will be locked before writing.
+
+
+
+
+                                       5
+ Griffin Solutions
+
+
+ ClearRecord                                                  Unit GSOBShel
+      Procedure  ClearRecord;
+
+      Sets current record memory buffer to spaces for the length of the
+      record.
+
+ CloseDataBases                                               Unit GSOBShel
+      Procedure  CloseDataBases;
+
+      Closes all opened database files from each used area.  The close pro-
+      cedure checks to see if the file was updated, and updates the header
+      information if required.
+
+
+ CopyStructure                                                Unit GSOBShel
+      Procedure  CopyStructure(filname: string);
+
+      Creates an 'empty' dBase file named filname that contains only the
+      structure information from the file (no records) in the current area.
+      This is useful for keeping a copy of the file structure for building
+      a new file.  If a memo file is present, an empty image of it will be
+      copied as well to a DBT file of filname.
+
+
+ CopyTo                                                       Unit GSOBShel
+      Procedure  CopyTo(filname: string);
+
+      Creates a dBase file named filname that is copied from the file in
+      the current area.  Records will only be copied if they are valid
+      (i.e., deleted records are ignored if SetDeletedOn, and SetFilterThru
+      must validate the record as well).  If a memo file is present, it will
+      be copied as well.
+
+
+ CnvAscToStr                                                  Unit GSOB_Str
+       Procedure  CnvAscToStr(var asc, st; lth : integer);
+
+      Procedure to convert a ZASCII string (a string terminated by a null 0)
+      to a Turbo Pascal string in which the first byte contains the length.
+
+      The asc argument is the ZASCII string to be converted (terminated by
+      a zero).  The st argument is the Turbo Pascal string to hold the
+      converted value.  The lth argument is the maximum length of the string
+      to move.  This should normally  be sizeof(st)-1, to ensure there is no
+      overrun of the Turbo Pascal string size.   Sizeof gets the size of the
+      string, including the length byte.  Therefore, one  must be subtracted
+      to adjust for actual positions available.
+
+
+
+
+
+
+
+                                       6
+                                                              Griffin Solutions
+
+
+      As a result of the call to this procedure, a string of characters in
+      memory is moved to a Turbo Pascal string variable.  If there is a null
+      (zero) character within the length of the moved string, that position
+      is used to set the string length.  Otherwise, the length of the string
+      is set to the size argument.
+
+
+ CnvStrToAsc                                                  Unit GSOB_Str
+      Procedure  CnvStrToAsc(var st, asc; lth : integer);
+
+      Procedure to convert a Turbo Pascal string in which the first byte
+      contains the string length to a ZASCII string (a string which is
+      terminated by a null (zero).
+      The st argument contains the Turbo Pascal string to convert.  The asc
+      argument is the location to store the converted string (terminated by
+      a zero).  Note that asc must be a memory location where the string is
+      to be actually stored (such as an array), and not a pointer to the
+      location.
+
+      The lth argument is the maximum length of the string to move.  This
+      should normally be sizeof(asc)-1, to ensure there is no  overrun of the
+      ZASCII string size.  Sizeof gets the maximum size of asc.  Therefore,
+      the programmer must ensure the actual string moved is at least one
+      less, to adjust for actual positions available, and still accomodate
+      a final null byte.
+
+      As a result of this call, a Turbo Pascal string is moved to a series of
+      consecutive locations in memory.  A null (zero) character is inserted
+      as the final byte to create a ZASCII string.
+
+
+ CTOD                                                         Unit GSOBShel
+      Function  CTOD(strn : string) : longint;
+
+      Function returns a Julian date as a longint value.  The input value
+      is a string in MM/DD/YY, MM/DD/YYYY, or YYYYMMDD format.  The date in
+      numeric Julian Date value will be returned.  If the date in the
+      string field is invalid, less than 3 Mar 0000 or greater than
+      31 Dec  65536, a -1 will be returned.
+
+
+ CurrentArea                                                  Unit GSOBShel
+      Function  CurrentArea: byte;
+
+      Returns the number of the currently selected work area assigned by
+      Select.
+
+
+
+
+
+
+
+
+                                       7
+ Griffin Solutions
+
+
+ Date                                                         Unit GSOBShel
+      Function  Date : longint;
+
+      Function returns the current date through a system DOS call. The
+      value returned will be a numeric longint value representing the
+      Julian date value.
+
+
+ DateGet                                                      Unit GSOBShel
+      Function  DateGet(st : string) : longint;
+
+      Function method that returns the date from a record date field. The
+      value returned will be a numeric longint value representing the Julian
+      Date.  St is the string containing the field name for the field
+      desired.
+
+      The date in numeric Julian Date will be returned. If the date in the
+      dBase field is invalid, less than 3 March 0000, or greater than 31
+      December 65536, a -1 will be returned.
+
+ DateGetN                                                     Unit GSOBShel
+      Function     DateGetN(n: integer): longint;
+
+      Returns a julian date value from the field number n.  The value
+      returned is the same as in DateGet.  However, DateGetN does not confirm
+      the field is a valid date field before retrieving the value.  If a
+      valid date was not contained in the field, a 0 will be returned.
+
+
+ DatePut                                                      Unit GSOBShel
+      Procedure  DatePut(st : string; jdte : longint);
+
+      Procedure method that stores a date value in a record field.  The value
+      stored will be in numeric Julian Date format.  It will be converted to
+      the character string YYYYMMDD to be stored in the dBase record.
+      St is the string containing the field name for the field desired. Jdte
+      is a longint Julian Date format to be converted and stored in the
+      record field.  The date in YYYYMMDD format will be stored in the
+      current record in the specified field.
+
+
+ DatePutN                                                     Unit GSOBShel
+      Procedure    DatePutN(n: integer; jdte: longint);
+
+      Converts and stores a date value jdte in field number n.  The value
+       stored is the same as in DatePut.  However, DatePutN does not confirm
+      the field is a valid date field before storing the value.  If the field
+      was not a valid date field, the value stored will be truncated or
+      expanded  to fit.
+
+
+
+
+
+                                       8
+                                                              Griffin Solutions
+
+
+ DBF                                                          Unit GSOBShel
+      Function  DBF: string
+
+
+      Returns the full path name of the current database.
+
+
+ DBFError                                                     Unit GSOBShel
+      Function  DBFError: integer;
+
+      Returns the error code generated by the last file I/O request for
+      the current database.
+
+
+ dBOF                                                         Unit GSOBShel
+      Function  dBOF: boolean;
+
+      Returns the flag set when a file read attempt is less than record
+      number 1.  for example, the following code will read a file from the
+      last record to the first:
+
+                  GoBottom;
+                  while not dBOF do
+                  begin
+                         .
+                     Skip(-1);
+                  end;
+
+
+ Deleted                                                      Unit GSOBShel
+      Function   Deleted: boolean;
+
+      Returns true if the current record's deletion status is true, false
+      otherwise.
+
+
+ DeleteRec                                                    Unit GSOBShel
+      Procedure  DeleteRec;
+
+      Procedure sets the deleted flag in the current record, and writes the
+      record to disk.  The deleted flag is the first byte of the record, and
+      is an ASCII space (' ') for not deleted and an ASCII asterisk ('*') for
+      a deleted record.
+
+      This procedure does not physically remove the record from the file.
+
+
+
+
+
+
+
+
+
+                                       9
+ Griffin Solutions
+
+
+ dEOF                                                         Unit GSOBShel
+      Function  dEOF: boolean;
+
+      Returns the Boolean flag set true when a file read command would be
+      beyond the end of the file.  Used to test for the end of the file.
+
+      Example:
+                GoTop;
+               While not dEOF do
+               begin
+
+                          .
+                          .
+                  Skip(1);
+               end;
+
+
+ DTOC                                                         Unit GSOBShel
+      Function  DTOC(jul : longint) : string;
+
+      Function that returns a string value in a viewable format (MM/DD/YY
+      or MM/DD/YYYY) based on the Julian Date provided.  The number of
+      characters that will be in the year position is determined by the
+      status of SetCenturyOn/Off (Off for YY, On for YYYY).
+
+      The argument passed to the function is a longint variable containing
+      a Julian Date value.  The return value will contain the string date
+      in MM/DD/YY or MM/DD/YYYY.  If the passed value is invalid '  /  /  '
+      will be returned.
+
+
+ DTOS                                                         Unit GSOBShel
+      Function  DTOS(jul : longint) : string;
+
+      Function that returns a string value in dBase storage format (YYYYMMDD)
+      based on the Julian Date provided.
+
+      The argument passed is a longint variable containing a Julian Date
+      value.   The  date in YYYYMMDD will be returned.  A blank field will
+      be returned if the input value is invalid.
+
+
+ Field                                                        Unit GSOBShel
+      Function  Field(n : byte): string;
+
+      Function returns a string holding the name of the field in  the dBase
+      record located at position n, in the range [1..number of fields].
+
+
+
+
+
+
+
+                                       10
+                                                              Griffin Solutions
+
+
+ FieldCount                                                   Unit GSOBShel
+      Function  FieldCount: byte;
+
+      Returns number of field descriptors in the current file.
+
+
+ FieldDec                                                     Unit GSOBShel
+      Function  FieldDec(n : byte): byte;
+
+      Function returns the number of decimal positions of the field in the
+      dBase field located at position n, where n is in the range of
+      [1..number of fields].
+
+
+ FieldGet                                                     Unit GSOBShel
+      Function FieldGet(fnam : string) : string;
+
+      Function that returns the contents in the current record of the
+      field name passed as fnam.  That means that character values will have
+      trailing spaces to fill the width of the field.  Numeric fields will
+      have leading spaces.  Date fields will be in the stored format of
+      YYYYMMDD, and a memo field will return the record number (with leading
+      spaces) pointing to where a memo record is stored in the memo file.
+
+      To specify the field to retrieve, just put its name in the function
+      argument.
+
+      Example:   Assuming a field named LASTNAME in the DBF record,
+                 the following will return the contents of the field in
+                 NewString:
+
+                 NewString := FieldGet('LASTNAME');
+
+      By the way, lower case letters could be used for 'lastname', or any
+       combination.  The function will set it to upper case for the field
+      search.
+
+      If an invalid field name is passed as an argument, the function will
+      return an empty string (length zero), which is a dead giveaway that you
+      goofed.  Any valid field returned has a width greater than zero.
+
+
+ FieldGetN
+                                                              Unit GSOBShel
+      Function     FieldGetN(fnum: integer): string;
+
+      Returns the contents of the field at field position fnum.  The rules of
+      how the value is structured are the same as for FieldGet.
+
+
+
+
+
+
+                                       11
+ Griffin Solutions
+
+
+ FieldLen                                                     Unit GSOBShel
+      Function  FieldLen(n : byte): byte;
+
+      Function returns the length of the field in the dBase record located
+      at position n, where n is in the range [1..number of fields].
+
+
+ FieldNo                                                      Unit GSOBShel
+      Function  FieldNo(fn : string): byte;
+
+      Function returns the field number of the field named fn in the dBase
+      record.  If fn is not a valid field name, 0 will be returned.
+
+
+ FieldPut                                                     Unit GSOBShel
+      Procedure  FieldPut(fnam, st : string);
+
+      Stores a value in a record field.
+
+      fnam is the string containing the field name for the field desired.
+      St is a string variable containing the data to be stored in the record
+      field.  Field data in character format will be stored in the current
+      record field.  St will be forced to the length of the  field.
+
+      Example:   assuming a field named FIELD1 in the DBF record, the fol-
+                 lowing will store the contents of NewString in the field:
+
+                 FieldPut('field1',NewString);
+
+
+ FieldPutN                                                    Unit GSOBShel
+      Procedure    FieldPutN(fnum: integer; st: string);
+
+      Stores string st in field fnum.  The action is the same as in FieldPut.
+
+
+ FieldType                                                    Unit GSOBShel
+      Function  FieldType(n : byte): char;
+
+      Function returns a character holding the type of the field in the dBase
+      record located at position n, where n is in [1..number of fields].
+
+
+ FileExist                                                    Unit GSOBShel
+      Function  FileExist(FName : string): boolean;
+
+      Function tests for the existence of file FName and returns true if it
+      exists.  FName must contain the filename and extension.  If the file
+      is not in the current directory you must give the complete path.
+
+
+
+
+
+                                       12
+                                                              Griffin Solutions
+
+
+ Find                                                         Unit GSOBShel
+      Procedure  Find(ss : string);
+
+      Searches an indexed database file for the first record with an
+      index key matching the specified character string.  Returns a
+      boolean TRUE in function Found if the record is found.
+
+
+
+ FLock                                                        Unit GSOBShel
+      Function    FLock: boolean;
+
+      Locks a file to prohibit any other user from writing records while
+      the requesting user controls the file.  Other users can read the
+      file during this time.
+
+      If successful, a true will be returned.  If unsuccessful, a  false will
+      be returned and the error code will be found by a call to DBFError.
+      If file sharing is not on, the method will return true.
+
+      This routine uses the "dirty read" method by actually locking a record
+      region over one billion bytes above the actual file location.   Since
+      all Lock calls reference this same offset, other lock requests for
+      the same areas will be rejected, but file reads to the true record loc-
+      ation will be allowed.
+
+
+ FlushDBF                                                     Unit GSOBShel
+      Procedure  FlushDBF;
+
+      Flushes the current file to disk and updates directory information.
+      The FlushDBF routine eliminates most lost data situations.  For
+      example, if FlushDBF is not used and a program has written to a file,
+      and the program or computer crashes unexpectedly before the program
+      gets around to closing the file, the most recently written data does
+      not get written to disk (because it is being temporarily saved in
+      memory buffers by DOS), and the file length in the directory entry does
+      not get updated.  FlushDBF will also work on networks (such as Novel
+      and 3-COM) that will not update directories using the normal DOS Flush
+      function.
+
+      This only needs to be used if automatic flush is off (SetFlushOff).  If
+      SetFlushOnAppend or SetFlushOnWrite is on, flushing will be automatic.
+
+
+ Found                                                        Unit GSOBShel
+      Function  Found: boolean;
+
+      Returns true when a record key match is found during a call Find.
+
+
+
+
+
+                                       13
+ Griffin Solutions
+
+
+ Go                                                           Unit GSOBShel
+      Procedure  Go(n : LongInt);
+
+      Read a record from a dBase file.  N is the record number to be read.
+
+      If available, the requested record will be loaded into the current
+      buffer and the Deleted Flag will be set if the record is deleted.
+      If the record was beyond the end of the file, the File_EOF will be set.
+      If the access was for a record less than physical record 1, the
+      File_TOF will be set to indicate the record was before the top of the
+      file.  These flags can be checked through dBOF and dEOF.
+
+
+
+ GoBottom                                                     Unit GSOBShel
+      Procedure  GoBottom;
+
+      Read the last record in the current file into the current record
+      buffer.  If an index is open, the master index file will be used to
+      access the record.
+
+
+ GoTop                                                        Unit GSOBShel
+      Procedure  GoTop;
+
+      Read the first record in the current file into the current record
+      buffer.  If an index is open, the master index file will be used to
+      access the record.
+
+
+ Index                                                        Unit GSOBShel
+      Procedure  Index(INames : string);
+
+      Sets an index to a dBase file. IName will consist of the index
+      file name(s), without the file extension.  Up to 16 indexes may
+      be included, separated by commas. The first index is used as the
+       master index.  All calls that read or write records will ensure
+      the index master is used for reads, and that all indexes are
+      updated on writes.  The master index may be changed by a call to
+      SetOrderTo.
+
+
+ IndexOn                                                      Unit GSOBShel
+      Procedure  IndexOn(filname, formla : string);
+
+      Creates an index file from the active database file.  The key
+      fields are ordered alphabetically, chronologically, or
+      numerically.
+
+
+
+
+
+
+                                       14
+                                                              Griffin Solutions
+
+
+      filname is a string (without extension) to assign as a file name
+      for the index.
+
+      formla is a string holding the field(s) to be used to make the
+      index key.  An index formula can have multiple fields for the
+      index expression.  For example:
+
+               IndexON('MyIndex','LASTNAME + FIRSTNAME');
+
+      will create an index with a key expression indexed on a combined
+      field of LASTNAME and FIRSTNAME.
+
+
+ LogicGet                                                     Unit GSOBShel
+      Function  LogicGet(st : string) : boolean;
+
+      Function method that returns the boolean value from a record logical
+      field.  St is the string containing the field name for the field
+      desired.
+
+
+ LogicGetN                                                    Unit GSOBShel
+      Function  LogicGetN(n: integer): boolean;
+
+      Returns boolean value for the field at position n,  If n is not in the
+      range of valid fields, a false is returned.  The field is  not checked
+      to ensure it is of type L.
+
+
+ LogicPut                                                     Unit GSOBShel
+      Procedure  LogicPut(st : string; b : boolean);
+
+      Procedure method that stores a logic value in a record field.  The
+      value stored will be 'T' or 'F' depending on the boolean value passed.
+
+      St is the string containing the field name for the field desired. The
+      argument b is a boolean variable containing the logical condition to be
+      converted and stored in the record field.  The boolean value will be
+      converted to 'T' or 'F' and stored in the current record in the
+      specified field.
+
+
+ LogicPutN                                                    Unit GSOBShel
+      Procedure    LogicPutN(n: integer; b: boolean);
+
+      Converts boolean value b and stores it in field n.  Method used is
+      described in LogicPut method.  This method does nor check to ensure
+      this is a field of type L.
+
+
+
+
+
+
+                                       15
+ Griffin Solutions
+
+
+ LUpdate                                                    Unit GSOBShel
+      Function     LUpdate: string;
+
+      Returns the date of the last update of the file in the current
+      file area.  If the file area is not in use, a blank value
+      will be returned.
+
+      LUpdate() returns the date in the form mm/dd/yy.  This format
+      can be modified with SetDateCenturyOn, SetDateCenturyOff, and
+      SetDateStyle.
+
+
+ MemoClear                                                    Unit GSOBShel
+      Procedure  MemoClear;
+
+      Creates an empty memo record in memory by eraseing all text lines
+      stored in the MemoCollect object and releasing text memory allocated
+      on the heap.  Normally called by MemoGet before reading a new memo
+      record.
+
+
+ MemoGet                                                      Unit GSOBShel
+      Procedure  MemoGet(st : string);
+
+      Procedure that loads the memo field into memory.  The field will
+      be stored into formatted lines.  St is the string containing the memo
+      field name.  If field st is not a memo field then an error will occur.
+      The memo field data is loaded into memory.  It may be retrieved with
+      MemoGetLine.  Lines of text are built and stored in a MemoCollect
+      object.  Word wrap is invoked and uses the length in Edit_Lgth to
+      determine the maximum line allowed.  The value of Edit_Lgth may be
+      changed with MemoWidth.  When Edit_Lgth characters are counted without
+      a hard line return, the routine searches for the logical place to break
+      the line, stores that part of the line in the line collection along
+      with a soft return ($8D), and starts a new count.  When a hard line
+      return ($0D) is encountered, the current line count characters are
+      stored in the line collection with a hard return.
+
+
+
+ MemoGetLine                                                  Unit GSOBShel
+      Function    MemoGetLine(linenum: integer): string;
+
+      The method returns the text contained at line linenum from the
+      MemoCollect line collection.  If linenum is invalid, an empty string
+      will be returned.  Note that linenum values are relative 0, with
+      linenum = 0 being the first line available.
+
+
+
+
+
+
+
+                                       16
+                                                              Griffin Solutions
+
+
+ MemoGetN                                                     Unit GSOBShel
+      Procedure  MemoGetN(n : integer);
+
+      Procedure that loads the memo field n into memory.  If field n is not
+      a memo field then an error will occur.  The action is the same as in
+      MemoGet.
+
+
+ MemoInsLine                                                  Unit GSOBShel
+      Procedure   MemoInsLine(linenum: integer; st: string);
+
+      Insert text st in the MemoCollect line collection at line linenum.
+      Linenum is in the range [1..MemoLines].  If linenum is <= 0 then the
+      line will be inserted at the end of the current collection.  If
+      linenum > MemoLines then no action will be taken.
+
+
+ MemoLines                                                    Unit GSOBShel
+      Function    MemoLines: integer;
+
+      Returns the number of memo text lines contained in the current memo
+      collection.
+
+
+ MemoPut                                                      Unit GSOBShel
+      Procedure  MemoPut(st : string);
+
+      This Function will write the current memo record in memory to the memo
+      file and return with the starting memo block inserted in the dBase memo
+      field st of the DBF record.  If field st is not a memo field then an
+      error will occur.  The actual DBF record is not updated by MemoPut.
+      The following code shows how the DBF record can be updated for each
+      MemoPut if needed:
+
+          procedure CollectionToMemo;
+          var
+             m1,
+             m2  : string[10];
+          begin
+             m1 := FieldGet('COMMENTS');     {Get old memo file block}
+             MemoPut('COMMENTS');
+             m2 := FieldGet('COMMENTS');     {Get new memo file block}
+                {If the memo field number has changed, save the DBF record}
+             if m1 <> m2 then Replace;
+          end;
+
+
+ MemoPutN                                                     Unit GSOBShel
+      Procedure  MemoPutN(n : integer);
+
+      Stores the memo record for field n.  If field n is not a memo field
+      then an error will occur.  The action is the same as in MemoPut.
+
+
+                                       17
+ Griffin Solutions
+
+
+ MemoWidth                                                    Unit GSOBShel
+      Procedure   MemoWidth(l: integer);
+
+      Sets Edit_Lgth to length l.  This length is used for word wrap
+      calculations.  A current memo record will not be changed by this call.
+
+      The new width will only take effect with the next call to MemoGet.
+      The default length is 70 characters.
+
+
+ NumberGet                                                    Unit GSOBShel
+      Function  NumberGet(st : string) : real;
+
+      Function method that returns the value in a record field.  The value
+      returned will be the numeric value of the field in the dBase record. St
+      is the string containing the field name for the field desired. This
+      will return a type real variable containing the converted record field
+      data.
+
+      If the value in the field is not a valid number, a 0 will be returned.
+
+
+ NumberGetN                                                   Unit GSOBShel
+      Function     NumberGetN(n: integer): real;
+
+      Returns a real number from field n.  If the value in the field is not a
+      valid number, a 0 will be returned.  No field type checking is done to
+      ensure the field is a numeric field.
+
+
+ NumberPut                                                    Unit GSOBShel
+      Procedure  NumberPut(st : string; r : real);
+
+      Procedure method that stores a numeric value in a record field.  The
+      value stored will converted to a character string using the length and
+      decimal places specified for the field.
+
+      St is the string containing the field name for the field desired. The
+      argument r is a real variable containing the number to be converted and
+      stored in the record field.  The numeric value will be converted to a
+      character value of the length and decimal places required by the field
+      descriptor and stored in the current record in the specified field.
+
+
+ NumberPutN                                                   Unit GSOBShel
+      Procedure    NumberPutN(n: integer; r: real);
+
+      Converts a number r to string and stores it in field n.  No field type
+
+      checking is done.  The method used for conversion is described in
+      NumberPut.
+
+
+
+                                       18
+                                                              Griffin Solutions
+
+
+ Pack                                                         Unit GSOBShel
+      Procedure  Pack;
+
+      Physically removes records marked for deletion from the active data-
+      base file in the current work area.
+
+
+ PadL                                                         Unit GSOB_Str
+      Function  PadL(strn: string; lth: integer): string;
+
+      Function to return a string that takes the input string (strn), and
+      creates a new string of length lth.  Leading spaces will be inserted
+      if necessary to create the new string.  If lth is less than the length
+      of strn, the new string will be truncated to length lth by deleting
+      leading characters.
+
+
+ PadR                                                         Unit GSOB_Str
+      Function  PadR(strn: string; lth: integer): string;
+
+      Function to return a string that takes the input string (strn), and
+      creates a new string of length lth.  Trailing spaces will be inserted
+      if necessary to create the new string.  If lth is less than the length
+      of strn, the new string will be truncated to length lth by deleting
+      trailing characters.
+
+
+ RecallRec                                                    Unit GSOBShel
+      Procedure  RecallRec;
+
+      Procedure clears the deleted flag in the current record, and writes the
+       record to disk.  The deleted flag is the first byte of the record, and
+      is an ASCII space (' ') for not deleted and an ASCII asterisk ('*') for
+      a deleted record.
+
+
+ RecCount                                                     Unit GSOBShel
+      Function  RecCount: longint;
+
+      Returns the number of records in the current file, including all
+      deleted records.
+
+
+ RecNo                                                        Unit GSOBShel
+      Function  RecNo: longint;
+
+      Returns the number of the current record in the current file.
+
+
+ RecSize                                                      Unit GSOBShel
+      Function  RecSize: word;
+
+      Returns the length of each dBase record in the current file.
+
+                                       19
+ Griffin Solutions
+
+ Reindex                                                      Unit GSOBShel
+      Procedure  Reindex;
+
+      Rebuilds all index files associated with the dBase file in the current
+      area.
+
+
+ Replace                                                      Unit GSOBShel
+      Procedure  Replace;
+
+      The Replace procedure will write the record memory buffer to the current
+      record on disk.
+
+      If file sharing is on, the record will be locked before writing.  If
+      indexes are opened, they will be updated if the value in the index's
+      key expression changes.
+
+
+ RLock                                                        Unit GSOBShel
+      Function   RLock: boolean;
+
+      Locks the current record (RecNumber) to prohibit any other user from
+      writing to the record while the requesting user controls it.  Other
+      users can read the record during this time.
+
+      If successful, a true will be returned.  If unsuccessful, a false will
+      be returned and the error code will be found by a call to DBFError.
+      If file sharing is not on, the method will return true.
+
+      This routine uses the "dirty read" method by actually locking a record
+      region over one billion bytes above the actual file location.   Since
+      all Lock calls reference this same offset, other lock requests for
+      the same areas will be rejected, but file reads to the true record loc-
+      ation will be allowed.
+
+
+ SaveMemo                                                     Unit GSOBShel
+      Procedure  SaveMemo(st, nm : string);
+
+      Reads the text file nm and stores it in the memo record for field st of
+      the current record in the current file.  Both the DBT and the DBF file
+      will be updated to reflect the new memo record.
+
+
+ Select                                                       Unit GSOBShel
+      Procedure  Select(Obj : byte);
+
+      Chooses a work area in which to open a database file, or selects
+      a work area in which a database file is already open.  The valid
+      work areas are 1 through 40.
+
+
+
+
+                                       20
+                                                              Griffin Solutions
+
+
+ SetCenturyOff
+                                                              Unit  GSOBShel
+      Procedure  SetCenturyOff;
+
+      Resets the GS_Date_Century in GSOB_DTE to prevent the century from
+      being displayed in viewable dates.  For example, dates are presented as
+      MM/DD/YY (02/25/92).
+
+
+ SetCenturyOn                                                 Unit GSOBShel
+      Procedure  SetCenturyOn;
+
+      Sets the GS_Date_Century in GSOB_DTE to allow the century to be
+      displayed in viewable dates.  For example, dates are presented as
+      MM/DD/YYYY (02/25/1992).
+
+
+
+ SetDateStyle                                                 Unit GSOBShel
+      Procedure  SetDateStyle(dt : DateTypes);
+
+      Determines the format for the date displays.  The default setting is
+      American.  The avaliable settings are:
+
+               American (or MDY)             mm/dd/yy
+               ANSI                          yy.mm.dd
+               British or French (or DMY)    dd/mm/yy
+               German                        dd.mm.yy
+               Italian                       dd-mm-yy
+               Japan (or YMD)                yy/mm/dd
+               USA                           mm-dd-yy
+
+      For example:  SetDateStyle(Italian) will cause the date to be
+                    returned as dd-mm-yy after a call to DTOC.
+
+         The valid settings are in the set DateTypes:
+
+             DateTypes = (American,ANSI,British,French,German,Italian,
+                          Japan, USA, MDY, DMY, YMD);
+
+
+
+ SetDBFCacheOff                                               Unit GSOBShel
+      Procedure SetDBFCacheOff;
+
+      Turns off the cache disk read for DBF files.  This is the default
+      mode.
+
+
+
+
+
+
+
+                                       21
+ Griffin Solutions
+
+
+ SetDBFCacheOn                                                Unit GSOBShel
+      Procedure SetDBFCacheOn;
+
+      Turns on a 32K cache to speed disk read for DBF files.  This is use-
+      ful for fast sequential reads.  However, this will slow random disk
+      reads when used for an index.  For this reason, the cache will be
+      turned off whenever an index is opened.  If an index is open when
+      SetDBFCacheOn is called, the request for cache will be ignored.
+
+
+ SetDeletedOff                                                Unit GSOBShel
+      Procedure SetDeletedOff;
+
+      Allows deleted records to be read instead of ignored for positional
+      record access commands (e.g., GoTop, GoBottom, Skip()).
+
+
+ SetDeletedOn                                                 Unit GSOBShel
+      Procedure  SetDeletedOn;
+
+      Causes deleted records to be ignored.  This is only valid for posi-
+      tional record access commands (e.g., GoTop, GoBottom, Skip()).  For
+      physical record access (e.g., Go(104)), the record will be read regard-
+      less of the deletion flag.
+
+
+ SetErrorCapture                                              Unit GSOBShel
+      Procedure  SetErrorCapture(UserRoutine : CaptureError);
+
+      Assigns a user-supplied routine to process run error information.
+      A 'hook' is available to allow the user to gain access to the runtime
+      errors generated by Griffin Solutions objects.  The default procedure
+      DefCapError halts the program using RunError.  If the user chooses to
+       take advantage of error capture to allow graceful recovery or shutdown,
+      it is done by replacing DefCapError with his or her own routines via
+      SetErrorCapture.
+
+      The following is an example of inserting a user-supplied error
+      handling procedure:
+                              Procedure must use Far calls!!!
+         {F+}   <--------------------------------------------
+         Procedure UserErrorCheck(Code, Info : integer);
+         begin
+            Writeln(Code,' ',Info);
+         end;
+         {F-}
+                       .
+                       .
+         SetErrorCapture(UserErrorCheck);
+
+
+
+
+
+                                       22
+                                                              Griffin Solutions
+
+
+      To return to the default, simply use:
+
+         SetErrorCapture(DefCapError);
+
+      Note that the assigned procedure must use far calls {$F+}.
+
+      Constants passed as arguments are contained in the GSOB_VAR unit.
+      The User supplied program must process the error using Code as the
+      run error code.  Info provides additional information about the error.
+
+
+ SetExactOff                                                  Unit GSOBShel
+      Procedure  SetExactOff;
+
+      Forces routines that compare dBase field values to match based on the
+      length of the search string only.  For example, SetExactOff will report
+      string 'ABC' as equal to a field containing 'ABCDEF'.
+
+
+ SetExactOn                                                   Unit GSOBShel
+      Procedure  SetExactOn;
+
+      Forces routines that compare dBase field values to have an exact match
+      to be equal.  For example, SetExactOn require comparison routines to
+      report string 'ABC' as not equal to a field containing 'ABCDEF'.
+
+
+ SetExclusiveOff                                              Unit GSOBShel
+      Procedure  SetExclusiveOff;
+
+      Allows other users to share files.  This is the default if file
+      sharing is available.
+
+
+ SetExclusiveOn                                               Unit GSOBShel
+      Procedure  SetExclusiveOff;
+
+      Allows a user to open a file on a multiuser system for exclusive
+      use, so that no other user can have access to that file.
+
+
+ SetFileHandles                                               Unit GSOBShel
+      Procedure  SetFileHandles(hndls: byte);
+
+      MS-DOS only allows up to 15 user files to be open at the same time for
+      a single program.  This Routine allows you to have 255 files open
+      simultaneously under DOS 3.0 or higher.  The function should be called
+      at the very start of the  program to ensure no more than the standard
+      handles are opened before the handle table is extended to the number
+      of handles specified in hndls.  The value in hndls must be at least 5
+
+
+
+
+                                       23
+ Griffin Solutions
+
+
+      greater than the number of user files required to account for the
+      standard files.
+
+      You must edit your CONFIG.SYS file (see the DOS manual for details),
+      so that it includes a line that says "FILES=XXX".  XXX should be a
+      number that is at least 3 greater than the maximum number of files
+      that will be in use (opened by  RESET, REWRITE or APPEND) at the same
+      time during the execution of your program  (larger values will provide
+      no additional benefit, with respect to your  individual program), and
+      should not exceed 255.  Under any version of DOS, the  minimum allow-
+      able value for XXX is 8.  Then, reboot your computer so that the
+      FILES=XXX parameter takes hold.  This same change to the CONFIG.SYS
+      file will have to be made on any machine in which your program is to
+      run.
+
+ SetFilterThru                                                Unit GSOBShel
+      Procedure  SetFilterThru(UserRoutine : FilterCheck);
+
+      Assigns a user-supplied routine to filter each record and report if
+      the record passes the filter test.  This is done by replacing the
+      default DefFilterCk with his or her own routine via a call to
+      SetFilterThru.
+
+      The Griffin Solutions routines will use this to find the next record
+      to be read and returned in the current record buffer.  A filter check
+      is done on all relative reads (e.g., GoBottom, GoTop, Skip()).
+      Physical record reads do not get filtered (e.g., Go(123)).
+
+      The following is an example of inserting a user-supplied record filter
+      testing function for names starting with 'A'-'L':
+
+                              Procedure must use Far calls!!!
+         {F+}   <--------------------------------------------
+         Function FilterName: boolean;
+         var
+            b : boolean;
+            n : string;
+         begin
+            n := FieldGet('LASTNAME');
+            b := n < 'M';
+            FilterName := b;
+         end;
+         {$F-}                   {End Far Calls}
+                   .
+         SetFilterThru(FilterName);
+
+      To return to the default, simply use:
+
+        SetFilterThru(DefFilterCk);
+
+
+
+
+
+                                       24
+                                                              Griffin Solutions
+
+
+      Note that the assigned procedure must use far calls {$F+}.  Also
+      note that SetFilterThru should not be called until a file  has been
+      assigned to the selected file area through Use.  If no file has
+      been assigned, Error 1008, Object is not initialized in file area,
+      will halt the program.
+
+
+ SetFlushOff                                                  Unit GSOBShel
+      Procedure  SetFlushOff;
+
+      Turns off automatic file flushing.  This is the default setting.
+      If automatic flushing is needed, use either the SetFlushOnAppend or
+      SetFlushOnWrite.  The FlushDBF procedure can be used if automatic
+      flushing is not wanted.
+
+
+ SetFlushOnAppend                                             Unit GSOBShel
+      Procedure  SetFlushOnAppend;
+
+      Flushes the current file to disk and updates directory information
+      when a record is appended to the current file.  This ensures the
+      correct file size is always contained in the DOS directory table.
+      This saves time over SetFlushOnWrite since on every write can really
+      slow write-intensive applications.
+
+
+ SetFlushOnWrite                                              Unit GSOBShel
+      Procedure  SetFlushOnWrite;
+
+      Flushes the current file to disk and updates directory information
+      when a record is written to the current file.  This ensures the
+      file is current and the correct file size is always contained in the
+      DOS directory table.  However, this slows processing in applications
+      that are write-intensive.  For these applications, SetFlushOnAppend
+      may be a better choice.
+
+
+ SetFormulaProcess                                           Unit GSOBShel
+      Procedure  SetFormulaProcess(UserRoutine1 : FormulaProc;
+                                   UserRoutine2: XtractFunc);
+
+      Assigns two user-supplied routines to process formulas to be built
+      and used by index files.  This call replaces the default routines
+      DefFormulaBuild and DefFormulaXtract with the programmer's own
+      routine via a call to SetFormulaProcess.
+
+      The Formula routine in HALCYON only handles straight field names.
+      However, the SetFormulaProcess allows a user-supplied routine to be
+      called anytime a formula is needed for an index action from anywhere
+      within the ancestor object(s).
+
+      Two routines must be provided.  UserRoutine1 is a routine that
+      parses the expression and translates into parameters are understood
+
+                                      25
+Griffin Solutions
+
+      by UserRoutine2.  UserRoutine2 is called every time a index key is
+      to be extracted from a record.
+
+      In this example, substrings of the first five positions of the
+      LASTNAME and FIRSTNAME fields are combined in a string that is then
+      returned as the formula's result.
+
+      The IndexOn command must contain the correct formula;
+      For example:
+
+         IndexOn('DEMOFRM2','SUBSTR(LASTNAME,1,5)+SUBSTR(FIRSTNAME,1,5)');
+
+      so it will be stored properly in the index header for use by other
+      programs such as dBase, FoxPro, Clipper, etc.
+
+
+             ($F+)
+             Function UFormula(st:string;var fmrec:GSR_FormRec): boolean;
+             var FldCnt : integer;
+             begin
+                if (fmrec.FAlias = 'TESTFRM2') then  (Correct Index?)
+                begin                                (set extract table)
+                   UFormula := true;
+                   for FldCnt := 0 to 32 do fmrec.FPosn[FldCnt] := 0;
+                   fmrec.FType := 'C';  (Character key)
+                   fmrec.FDcml := 0;
+                   fmrec.FSize := 10; (5 chars from LASTNAME & FIRSTNAME)
+                end
+                else UFormula := true;
+             end;
+              Function UFormXtract(var st:string;fmrec:GSR_FormRec):boolean;
+             begin
+                if (fmrec.FAlias = 'TESTFRM2') then    (Correct index?)
+                begin
+                   UFormXtract := true;
+                   st := SubStr(FieldGet('LASTNAME'),1,5) +
+                   SubStr(FieldGet('FIRSTNAME'),1,5);
+                end
+                else UFormXtract := false;
+             end;
+             ($F-)
+                                  .
+                                  .
+                                  .
+            Select(1);
+            Use('GSDMO_01');
+            SetFormulaProcess(UFormula, UFormXtract);
+                                  .
+                                  .
+
+            To return to the default, simply use:
+            SetFormulaProcess(DefFormulaBuild, DefFormulaXtract);
+
+
+
+                                      26
+                                                             Griffin Solutions
+
+      Note that the assigned procedure must use far calls ($F+).  Also
+      note that SetFormulaProcess should not be called until a file has
+      been assigned to the selected file area through Use.  If no file
+      has been assigned, Error 1008, Object is not initialized in file
+      area, will halt the program.
+
+SetLockOff                                                   Unit GSOBShel
+     Procedure  SetLockOff;
+
+     Disables automatic file locking.  The user must use ALock, FLock,
+     RLock, and Unlock commands to lock/unlock files.
+
+
+
+SetLockOn                                                    Unit GSOBShel
+     Procedure  SetLockOn;
+
+     Enables automatic file locking when records are written, to maintain
+     the database integrity during updates.  Still allows ALock, FLock,
+
+
+
+     RLock, and Unlock commands to lock/unlock files.  This is the default
+     mode.
+
+
+SetOrderTo                                                   Unit GSOBShel
+     Procedure  SetOrderTo(order : integer);
+
+     Establishes the master index when more than one is available.  For
+     example:
+
+             Index('Indx1, Indx2, Indx3');
+             SetOrderTo(3);
+
+     will make Indx3 the master index, used for all file reads.
+
+
+SetStatusCapture                                             Unit GSOBShel
+     Procedure  SetStatusCapture(UserRoutine : CaptureStatus);
+
+     Assigns a user-supplied routine to process status information.  Several
+     functions in HALCYON can take some time to complete (e.g., IndexOn
+     and Pack).  For this reason, a 'hook' is available to allow the user
+     to gain access and track progress.  The default procedure DefCapStatus
+     ignores the status.  If the user chooses to take advantage of progress
+     reporting, it is done by replacing DefCapStatus with his or her own
+      routines via SetStatusCapture.  The status may be ignored again later
+     by reseting the default via SetCaptureStatus(DefCapStatus).
+
+     The following is an example of inserting a user-supplied status
+     reporting procedure:
+
+
+
+                                      27
+Griffin Solutions
+
+                             Procedure must use Far calls!!!
+        {F+}   <--------------------------------------------
+        Procedure UserStatusUpdate(stat1,stat2,stat3 : longint);
+        begin
+           Writeln(stat1,' ',stat2,' ',stat3);
+        end;
+        {F-}
+                                      .
+                                      .
+        SetStatusCapture(UserStatusUpdate);
+
+     To return to the default, simply use:
+
+        SetStatusCapture(DefCapStatus);
+
+     Note that the assigned procedure must use far calls {$F+}.
+     Constants passed as arguments are contained in the GSOB_VAR unit,
+     they are:
+
+
+
+
+
+
+       StatusStart     = -1;   Passed to indicate a routine will be passing
+                               status update information in the future.
+       StatusStop      = 0;    Signals termination by a routine, cancelling
+                               status update processing.
+       StatusIndexTo   = 1;    Token for identifying IndexTo as the routine
+                               passing status information during sort phase.
+       StatusIndexWr   = 2;    Token for identifying IndexTo as the routine
+                               passing status information during write phase.
+       StatusSort      = 5;    Token for identifying Sort as the routine
+                               passing status information.
+       StatusCopy      = 6;    Token for identifying Copy as the routine
+                               passing status information during file writing.
+       StatusPack      = 11;   Token for identifying Pack as the routine
+                               passing status information.
+       GenFStatus      = 901;  Token for file record creation  report.
+
+     The structure of a StatusUpdate call is:
+
+       StatusUpdate(statword1, statword2, statword3);
+
+       where the statword* values are type longint and will vary depending on
+       the contents of statword1.  For example:
+
+       if     statword1 = StatusStart
+       then:  statword2 = the calling routine token (e.g., StatusIndexTo,
+                          StatusPack).
+              statword3 = the number of records to be processed.
+
+
+
+
+                                      28
+                                                             Griffin Solutions
+
+       if     statword1 = StatusStop
+       then:  statword2 = 0
+              statword3 = 0
+
+       if      statword1 = StatusCopy/StatusIndexTo/StatusPack/StatusSort
+       then:   statword2 = current record number being processed
+               statword3 = 0
+
+       if      statword1 = StatusIndexWr
+       then:   statword2 = current record number being processed
+               statword3 = Pass number
+
+
+Skip                                                         Unit GSOBShel
+     Procedure  Skip(n : longint);
+
+     Causes the active database file to move a specified number of
+     records and read the new record.  A positive n will move from
+     the current record position toward the end of the file.  A
+     negative n will move toward the beginning of the file.  A value
+     of zero will reread the current record.
+
+
+     If the Skip would be beyond the end of the file the last record
+     in the file will be read and the End of File flag will be set.
+     If the Skip is negative and would be before the beginning of the
+     file, the first record in the file is read and the Top of File
+     flag is set true.
+
+     If the file is indexed, Skip follows the Index order.
+ 
+
+SortTo                                                       Unit GSOB_Str
+     Procedure  SortTo(filname, formla: string; sortseq: SortStatus);
+
+     Creates a dBase file named filname that is sorted on the expression
+     in formla.  Sortseq determines the direction of the sort.  Valid
+     arguments for sortseq are SortUp, SortDown, and NoSort.  NoSort will
+     give a copy of the current file unsorted.  With SetDeletedOn, all
+     deleted records will be ignored and not written to the new file.  If
+     a memo file is present, it will be copied as well.
+
+     Formla is a string holding the field(s) to be used to make the
+     index key.  An index formula can have multiple fields for the
+     index expression.  For example:
+
+              SortTo('MyFile','LASTNAME + FIRSTNAME');
+
+     will create a dBase file sequenced on a combined field of LASTNAME
+     and FIRSTNAME.
+
+     An opened file cannot be used as the destination name for the sorted
+     file.  A runtime error 1007 will occur if the file is already opened.
+
+
+                                      29
+Griffin Solutions
+
+StrCompare                                                   Unit GSOB_Str
+     Function StrCompare(var s1,s2): integer;
+
+     Function compares two strings, s1 and s2.  The return integer will
+     contain one of the following values:
+
+           -1 if s1 is less than s2
+            0 if s1 equals s2
+            1 if s1 is greater than s2
+
+
+StrDate                                                      Unit GSOB_Str
+     Function  StrDate(jul : longint) : string;
+
+     Function to convert a longint Julian Date to a formatted date field
+     (MM/DD/YY or MM/DD/YYYY).  The number of characters that will be in
+     the year position is determined by the status of GS_Date_Century in
+     unit GSOB_Dte (False for YY, true for  YYYY).  A blank string will be
+     returned if the passed argument is invalid.
+
+
+StringGet                                                    Unit GSOBShel
+     Function  StringGet(fnam: string) : string;
+
+     Function method that returns the value in a record field.  The value 
+     returned will be the character string as it is stored in the dBase
+     record.  Fnam is the string containing the field name for the field
+     desired.
+
+     StringGet returns a string formatted based on the field type.  A 
+     character field is returned with trailing spaces removed, numeric 
+     values with leading spaces removed, date fields formatted as MM/DD/YY,
+     and memo fields as "---memo---" if the memo field is not used or
+     "---MEMO---" if the memo contains data.  Note with this, it is possible
+     to have an empty string (length zero) if a character field is blank.
+     
+
+StringGetN                                                   Unit GSOBShel
+     Function  StringGetN(fnum: integer): string;
+
+     Retrieves a string from field fnum, using the same rules as StringGet.
+
+
+StringPut                                                    Unit GSOBShel
+     Procedure  StringPut(fnam, st : string);
+
+     Procedure method that stores a string value in a record field.
+     
+     Fnam is the string containing the field name for the field  desired.  St
+     is a string variable containing the string to be stored in the record
+     field.  The string value will be stored in the current record in the
+     specified field, properly padded with spaces to fit.
+
+
+
+                                      30
+                                                             Griffin Solutions
+
+StringPutN                                                   Unit GSOBShel
+     Procedure    StringPutN(fnum: integer; st: string);
+
+     Places string st in field fnum using the same technique as StringPut.
+
+
+StripChar                                                    Unit GSOB_Str
+     Procedure  StripChar(ch : Char; var st : string);
+
+     This procedure will remove all instances of the character ch from the
+     string st.  With st = 'one&two&three', a procedure call of
+     StripChar('&',st) would return with st = 'onetwothree'.  This procedure
+     is also useful for removing embedded spaces in a string.
+
+
+Strip_Flip                                                   Unit GSOB_Str
+     Function  Strip_Flip(st : string) : string;
+
+     This function will remove trailing spaces and move any part of the
+     string that is preceeded by a '~' to the end of the string.  For
+     example:  "Smith~John X." will be converted to "John X. Smith" on
+     return.
+
+     St is the string to be converted.  Trailing spaces are deleted and
+     any part of the string preceeded by a "~" is flipped to the end of
+     the string.
+
+
+StrLogic                                                     Unit GSOB_Str
+     Function  StrLogic(tf : boolean) : string;
+
+      Function to convert a boolean value to a string containing 'T' or 'F'.
+
+     The tf argument is the boolean value to be converted. A string holding
+     'T' or 'F' is returned, based on tf being true for 'T' and false for
+     'F'.
+
+
+StrNumber                                                    Unit GSOB_Str
+     Function  StrNumber(num : real; lth,dec : integer) : string;
+
+     Function to convert a numeric real value to a string.
+
+     Argument num is the numeric type real value to be converted.  Lth is
+     the integer length to use for the string.  Dec is the integer value
+     for number of decimal places.  A string holding the numeric value is
+     returned.
+
+
+StrWholeNum                                                  Unit GSOB_Str
+     Function  StrWholeNum(num : longint; lth : integer) : string;
+
+     Function to convert a numeric integer value to a string.
+
+
+                                      31
+Griffin Solutions
+
+     Num is the numeric type longint value to be converted.  Lth is the
+     integer length to use for the string.  A string holding the numeric
+     value is returned.
+
+
+SubStr                                                       Unit GSOB_Str
+     Function  SubStr(s : string; b,l : integer) : string;
+
+     Function to return a substring from a string.  As a function, this will
+     allow the user to use the routine directly in other arguments such as
+     write statements.
+
+     S is the string from which the substring is to be extracted, b is the
+     integer number for the starting location within the string, and l is
+     the integer number of positions to extract.  A string holding the
+     substring value is returned.
+
+
+TrimL                                                        Unit GSOB_Str
+     Function  TrimL(strn : string):string;
+
+     Function to remove leading spaces from a string.
+
+     Strn is the string to be converted.  A string with all leading spaces
+     removed is returned.
+
+
+TrimR                                                        Unit GSOB_Str
+     Function  TrimR(strn : string):string;
+
+     Function to remove trailing spaces from a string.
+
+     Strn is the string to be converted.  A string with all trailing
+     spaces removed is returned.
+
+
+Unique_Field                                                 Unit GSOB_Str
+     Function  Unique_Field : string;
+
+     Function to return an eight-character unique string.  This is useful
+     to make a one-of-a-kind data name as a unique key or file name.  A
+     primary purpose of this function is to create a unique linking name
+     between related files where no  other data record is assured of being
+     unique.  For example, in a family tree file, there may be several
+     people with the same name.  By adding a unique key when a new name
+     is entered, you may be assured of "uniqueness" of record identifiers
+     for related files, such as spouse or parent files.
+
+
+UnLock                                                       Unit GSOBShel
+     Procedure   UnLock;
+
+     This method releases the file area previously locked.  If multiple
+
+
+                                      32
+                                                             Griffin Solutions
+
+     calls to lock the same region have been nested (for example, the
+     programmer called RLock and the record was also automatically locked
+     during Replace, only the UnLock to release the original lock will
+     actually unlock the record.  This will clear any locks on related
+     files, such as index and memo files as well.  Unlock only applies
+     to the current file area.  Use UnlockAll to release locks on all
+     files in all areas.
+
+     There is no effect if this method is called when no record is locked or
+     file sharing is not on.
+
+
+UnLockAll                                                    Unit GSOBShel
+     Procedure   UnLockAll;
+
+     This method releases all file locks in all areas.
+
+     There is no effect if this method is called when no record is locked or
+     file sharing is not on.
+
+
+Use                                                          Unit GSOBShel
+     Procedure  Use(FName : string);
+
+     Assigns and opens a dBase file to the current area.  FName is the name
+     of the dBase file without the .DBF extension.
+
+
+ValDate                                                      Unit GSOB_Str
+     Function  ValDate(strn : string) : longint;
+
+     Function to convert a string date field (MM/DD/YY, MM/DD/YYYY, or
+     YYYYMMDD) to a longint Julian Date.
+
+     Strn is the string holding the date in MM/DD/YY, MM/DD/YYYY, or
+     YYYYMMDD format.  The date in numeric Julian Date value will be
+     returned.  
+
+     If the date in the string field is invalid, blank, less than 
+     3 Mar 0000 or greater than 31 Dec 65536, a 0 will be returned.
+
+     Note the difference between this and the -1 returned by GS_Date_Juln.
+     A zero is returned to maintain consistency with an all-blank  date
+     field in a dBase record.
+
+
+ValLogic                                                     Unit GSOB_Str
+     Function  ValLogic(strn : string) : boolean;
+
+     Function to convert string to a boolean value.
+
+     Strn is the string holding a character to be converted.  If the
+     OldLogic value is "T","t","Y", or "y", bool is set true, else bool
+     is set false.
+
+                                      33
+Griffin Solutions
+
+ValNumber                                                    Unit GSOB_Str
+     Function  ValNumber(strn : string) : real;
+
+     Function to convert a string to a numeric value.
+
+     Strn is the string to convert.  A numeric value is returned which is
+     the string's value.  If the string is invalid, a zero is returned.
+
+
+ValWholeNum                                                  Unit GSOB_Str
+     Function  ValWholeNum(strn : string) : Longint;
+
+     Function to convert a string to a numeric integer value.
+
+     Strn is the string to convert.  A numeric value is returned which is
+     the string's value.  If the string is invalid, a zero is returned.
+
+
+Zap                                                          Unit GSOBShel
+     Procedure  Zap;
+
+     Removes all records from the active database file.
+
+     Any open index files in the current work area are automatically
+     reindexed to reflect the empty database file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      34
+                                                             Griffin Solutions
+
+
+
+
+                                Error Codes
+
+
+   dosInvalidFunct   =    1;         {Invalid function number}
+   dosFileNotFound   =    2;         {File not found}
+   dosPathNotFound   =    3;         {Path not found}
+   dosTooManyFiles   =    4;         {Too many open files}
+   dosAccessDenied   =    5;         {File access denied}
+   dosInvalidHandle  =    6;         {Invalid file handle}
+   dosInvalidAccess  =   12;         {Invalid file access code}
+   dosInvalidDrive   =   15;         {Invalid drive number}
+   dosCantRemoveDir  =   16;         {Cannot remove current directory}
+   dosCantRename     =   17;         {Cannot rename across drives}
+   dosLockViolated   =   33;         {Attempted to read locked disk}
+   dosDiskReadError  =  100;         {Disk read error}
+   dosDiskWriteError =  101;         {Disk write error}
+   dosFileNotAssgd   =  102;         {File not assigned}
+   dosFileNotOpen    =  103;         {File not open}
+   dosNotOpenInput   =  104;         {File not open for input}
+   dosNotOpenOutput  =  105;         {File not open for output}
+   dosInvalidNumber  =  106;         {Invalid numeric format}
+   dosWriteProtected =  150;         {Disk is write-protected}
+   dosBadStructure   =  151;         {Bad drive request struct length}
+   dosDriveNotReady  =  152;         {Drive not ready}
+   dosDataCRCError   =  154;         {CRC error in data}
+   dosDiskSeekError  =  156;         {Disk seek error}
+   dosMediaUnknown   =  157;         {Unknown media type}
+   dosSectorNotFound =  158;         {Sector Not Found}
+   dosPrinterNoPaper =  159;         {Printer out of paper}
+   dosWriteFault     =  160;         {Device write fault}
+   dosReadFault      =  161;         {Device read fault}
+   dosHardwareFail   =  162;         {Hardware failure}
+   tpDivideByZero    =  200;         {Division by zero}
+   tpRangeCheck      =  201;         {Range check error}
+   tpStackOverflow   =  202;         {Stack overflow error}
+   tpHeapOverflow    =  203;         {Heap overflow error}
+   tpInvalidPointer  =  204;         {Invalid pointer operation}
+   tpFloatPointOflow =  205;         {Floating point overflow}
+   tpFloatPointUFlow =  206;         {Floating point underflow}
+   tpFloatPointInvld =  207;         {Invalid floating point operation}
+   tpNoOverlayMngr   =  208;         {Overlay manager not installed}
+   tpOverlayReadErr  =  209;         {Overlay file read error}
+   tpObjectNotInit   =  210;         {Object not initialized}
+   tpAbstractCall    =  211;         {Call to abstract method}
+   tpStreamRegError  =  212;         {Stream registration error}
+   tpCollectionIndex =  213;         {Collection index out of range}
+   tpCollectionOFlow =  214;         {Collection overflow error}
+   gsBadDBFHeader    = 1001;         {dBase DBF file header invalid}
+
+
+
+
+                                      35
+Griffin Solutions
+
+
+   gsDBFRangeError   = 1002;         {dBase record request beyond EOF}
+   gsInvalidField    = 1003;         {dBase field name is invalid}
+   gsBadFieldType    = 1004;         {dBase field is of incorrect type}
+   gsBadDBTRecord    = 1005;         {dBase memo record has format error}
+   gsBadFormula      = 1006;         {Formula expression cannot be translated}
+   gsFileAlreadyOpen = 1007;         {Dest file for sort or copy already open}
+   gsAreaIsNotInUse  = 1008;         {Object is not initialized in file area}
+
+   {               Extended Run Time Error Code Information             }
+
+                             {GSOB_DSK errors}
+   dskAddToFileError = 1112;         {Error in GSO_DiskFile.AddToFile}
+   dskCloseError     = 1103;         {Error in GSO_DiskFile.Close}
+   dskEraseError     = 1104;         {Error in GSO_DiskFile.Erase}
+   dskFileSizeError  = 1105;         {Error in GSO_DiskFile.FileSize}
+   dskFlushError     = 1111;         {Error in GSO_DiskFile.Flush}
+   dskReadError      = 1101;         {Error in GSO_DiskFile.Read}
+   dskRenameError    = 1106;         {Error in GSO_DiskFile.ReName}
+   dskResetError     = 1107;         {Error in GSO_DiskFile.Reset}
+   dskRewriteError   = 1108;         {Error in GSO_DiskFile.Write}
+   dskTruncateError  = 1109;         {Error in GSO_DiskFile.Truncate}
+   dskWriteError     = 1102;         {Error in GSO_DiskFile.Write}
+
+                             {GSOB_DBF errors}
+   dbfAppendError     = 1206;        {Error in GSO_dBaseDBF.Append}
+   dbfCheckFieldError = 1299;        {Error in GSO_dBaseFLD.CheckField}
+   dbfGetRecError     = 1207;        {Error in  GSO_dBaseDBF.GetRec}
+   dbfHdrWriteError   = 1201;        {Error in GSO_dBaseDBF.HdrWrite}
+   dbfInitError       = 1204;        {Error in GSO_dBaseDBF.Init}
+   dbfPutRecError     = 1202;        {Error in GSO_dBaseDBF.PutRec}
+
+                             {GSOB_DBS errors}
+   dbsFormulaError    = 2101;        {Error in GSO_dBHandler.Formula}
+   dbsMemoGetError    = 2102;        {Error in GSO_dBHandler.MemoGet}
+   dbsMemoGetNError   = 2103;        {Error in GSO_dBHandler.MemoGetN}
+   dbsMemoPutNError   = 2104;        {Error in GSO_dBHandler.MemoPutN}
+   dbsPackError       = 2105;        {Error in GSO_dBHandler.Pack}
+   dbsSortFile        = 2107;        {Error in GSO_dBHandler.SortFile}
+   dbsZapError        = 2106;        {Error in GSO_dBHandler.Zap}
+
+                             {GSOB_NDX errors}
+   ndxInitError        = 5101;       {Error in GSO_IndexFile.Init}
+   ndxNdx_AdjValError  = 5102;       {Error in GSO_IndexFile.Ndx_AdjVal}
+
+                             {GSOB_INX errors}
+   inxRetrieveKeyError = 5211;       {Error in GSO_IdxColl.RetrieveKey}
+
+                              {GSOB_MMO errors}
+   mmoInitError        = 6101;       {Error in GSO_dBMemo.Init}
+   mmoMemoPutError     = 6102;       {Error in GSO_dBMemo.MemoPut}
+
+
+
+
+                                      36
+                                                             Griffin Solutions
+
+
+   mmoMemoSetParamErr  = 6199;       {Error in GSO_dBMemo4.MemoSetParam}
+
+                             {GSOBShel errors}
+   shelConfirmUsedArea = 7101;       {Accessed a file area that is not Use'd}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      37
+Griffin Solutions
+
+
+
+
+                              Griffin Solutions
+                           Demonstration Programs
+                                  Synopsis
+
+
+Program GSDMO_01              DBase File Creator
+
+       This program creates a test file for the next several programs.
+
+       The GSDMO_01.DBF file will be created by using the MakeTestData
+       procedure in GSOB_GEN.PAS.
+
+
+
+Program GSDMO_02               DBase File Lister
+
+       This program demonstrates how dBase files may be listed using
+       Griffin Solutions units.
+
+       If the GSDMO_01.DBF file does not exist, the program will display a
+       a message that the file was not found and to run GSDMO_01 to make
+       the file.
+
+       The program opens a dBase file and proceeds to list selected fields
+       from each record.
+
+       New procedures/functions introduced are:
+
+                 CloseDataBases
+                 dEOF
+                 FieldGet
+                 FileExist
+                 GoTop
+                 Select
+                 Skip
+                 Use
+ 
+
+
+Program GSDMO_03          DBase File Formated Lister
+
+       This program demonstrates how dBase files may be listed using
+       different field type formats.
+
+       If the GSDMO_01.DBF file does not exist, the program will display a
+       a message that the file was not found and to run GSDMO_01 to make
+       the file.
+
+
+
+
+
+                                      38
+                                                             Griffin Solutions
+
+
+       The program opens a dBase file and proceeds to list selected fields
+       from each record.
+
+       The NumberGet, DateGet, and StringGet commands are shown in the
+       example.  This is intended to contrast them with the basic FieldGet
+       command used to get the field image directly from disk.
+
+       The NumberGet Procedure returns the actual numeric value in the field.
+       This should be used on Number fields only as it returns a real value.
+
+       The DateGet Function is used to retrieve a longint Julian Date from
+       the date field.  See GSOB_DTE.PAS for an explanation of Julian Dates.
+       Several other date handling routines are shown, such as SetDateStyle,
+       SetCenturyOn, and DTOC()
+
+       The StringGet Function returns the trimmed string.
+
+       DTOC is used to display a 'viewable' date from the longint Julian
+       Date value retrieved by DateGet.
+
+       New procedures/functions introduced are:
+
+                 DateGet
+                 DTOC
+                 NumberGet
+                 SetCenturyOn
+                 SetDateStyle
+                 StringGet
+
+
+
+Program GSDMO_04           DBase File Updating
+
+       This program demonstrates how dBase fields may be modified using
+       Griffin Solutions units.
+
+       If the GSDMO_01.DBF file does not exist, the program will display a
+       a message that the file was not found and to run GSDMO_01 to make
+       the file.
+
+       The program opens a dBase file and proceeds to list selected fields
+       from each record.
+
+       It will reverse all the letters in LASTNAME and write the record
+       back to disk using Replace.
+
+       Finally, it will read the file back in, list the new values, put
+       the old LASTNAME back to the record by reversing letters again, and
+       writing the record again.
+
+
+
+
+
+                                      39
+Griffin Solutions
+
+
+       New procedures/functions introduced are:
+
+                 Replace
+                 StringPut
+
+
+
+Program GSDMO_05           DBase File Appending
+
+       This program demonstrates how dBase files may be appended using
+       Griffin Solutions units.
+
+       If the GSDMO_01.DBF file does not exist, the program will  display a
+       a message that the file was not found and to run GSDMO_01 to make
+       the file.
+
+       The program opens a dBase file, appends a record, and proceeds to
+       list selected fields from each record.
+
+       New procedures/functions introduced are
+
+                 Append
+                 ClearRecord
+                 Date
+                 DatePut
+
+
+
+Program GSDMO_06          DBase File Indexing
+
+       This program demonstrates how dBase files may be indexed using
+       Griffin Solutions units.
+
+       If the GSDMO_01.DBF file does not exist, the program will display a
+       a message that the file was not found and to run GSDMO_01 to make
+       the file.
+
+       The program opens a dBase file, creates an index on LASTNAME,
+       and proceeds to list selected fields from each record in LASTNAME
+       sequence.
+
+       New procedures/functions introduced are:
+
+                 Index
+                 IndexOn
+
+
+
+
+
+
+
+
+
+                                      40
+                                                             Griffin Solutions
+
+
+
+Program GSDMO_07           DBase Memo File Lister
+
+       This program demonstrates how dBase memo records may be listed
+       using Griffin Solutions units.
+
+       The program opens a dBase file GSDMO_07.DBF and proceeds to list
+       selected fields from each record along with its memo record.  If
+       the file does not exist it will be created in dBase IV format.
+
+       New procedures/functions introduced are:
+
+                 MemoGet
+                 MemoGetLine
+                 MemoLines
+                 MemoWidth
+
+
+
+Program GSDMO_08       DBase File Structure Lister
+
+       This program demonstrates how dBase file structures may be listed
+       using Griffin Solutions units.
+
+       The program opens a dBase file and lists all fields from each
+       record along with its structure.
+
+       New procedures/functions introduced are:
+
+                 Deleted
+                 Field
+                 FieldCount
+                 FieldDec
+                 FieldGetN
+                 FieldLen
+                 FieldType
+                 LUpdate
+                 RecCount
+                 RecNo
+
+
+
+Program GSDMO_09           DBase Index Creator
+
+       Unit to demonstrate more complex index processing.
+
+       The GSDMO_09.DBF file will be created, if it does not exist, by
+       using the MakeTestData procedure in GSOB_GEN.PAS.  The IndexOn
+       routine will be used to index on LASTNAME.  This can be commented
+       out after the index is created and just use the index by the
+       command: Index('GSDMO_09').
+
+
+
+                                      41
+Griffin Solutions
+
+
+       The indexed file will be listed ascending and descending.  Finally,
+       Find is called using the LASTNAME in physical record 35.  The
+       record number of the first occurrence of the name will be returned.
+       This may be record 35, or an earlier record if one exists with the
+       same last name.
+
+       New procedures/functions introduced are:
+
+                 dBOF
+                 Find
+                 GoBottom
+                 TrimR
+
+
+
+Program GSDMO_10            DBase Multiple Indexes
+
+       Unit to demonstrate multiple index processing.  The indexes are
+       first created and then updated with more records to demonstrate
+       multiple indexes may be updated when a dBase record is added or
+       updated.
+
+       The GSDMO_10.DBF file will be created by using the MakeTestData
+       procedure in GSOB_GEN.PAS.
+
+       The IndexOn routine will be used to make index GSDMO10A.NDX on
+       LASTNAME+FIRSTNAME and index GSDMO10B.NDX on BIRTHDATE.
+
+       The indexed file will be listed ascending using GSDM010A.
+
+       Additional Records will be added to test multiple index update.
+
+       Finally, the file will be listed again in LASTNAME+FIRSTNAME and
+       BIRTHDATE index sequence.  Note the use of SetOrderTo to switch
+       between which index is the master.
+
+       New procedures/functions introduced are:
+
+                 DBFActive
+                 SetOrderTo
+
+
+
+Program GSDMO_11       DBase Relational File Maker
+
+       This unit creates the files that will be used to demonstrate
+       how to link the relationships between dBase files for data
+       retrieval based on common fields in two files.
+
+
+
+
+
+
+                                      42
+                                                             Griffin Solutions
+
+
+       The code is fairly complex in this routine, since it is busy
+       creating random data for transaction records.  It is available
+       for review, with no promise of how much this will contribute
+       to an understanding of specific Griffin Solutions commands.
+
+       This will first build a master file and then create a transaction
+       file using the UNIQUEID field in the master file as the key.  The
+       transactions will insert the UNIQUEID field in each record as the
+       MASTERID field.  This field will be used to link back to the master
+       record.
+
+       A Master file index on the UNIQUEID field will be created.
+       A Master file index on the LASTNAME+FIRSTNAME will be  created.
+       A Transaction file index on the MASTERID field will be created.
+
+       The Master file will have the structure as defined in GSOB_GEN.PAS.
+       The Transaction file structure is:
+
+             MASTERID     C    8   0      Uses UNIQUEID from Master Record
+             FULLNAME     C   40   0      In Lastname~FirstName format
+             TRANDATE     D    8   0
+             AMOUNT       N    8   2
+             PAYTYPE      C    1   0
+
+       New procedures/functions introduced are:
+
+                 FieldPut
+                 NumberPut
+
+
+
+Program GSDMO_12         DBase Relational File Linkage
+
+       This unit demonstrates how to link the relationships between
+       dBase files for data retrieval based on common fields in two files.
+
+       The master file index is on the UNIQUEID field.  This will be used
+       to get the master record based on the MASTERID field in the
+       transaction record.
+
+       The routine will read each transaction and display transaction
+       information.  It will then find the correct master record and
+       display master information.
+
+       New procedures/functions introduced are:
+
+                 Found
+                 Strip_Flip
+
+
+
+
+
+
+                                      43
+Griffin Solutions
+
+
+Program GSDMO_13         DBase Relational File Linkage
+
+       This unit demonstrates how to search for multiple records with a
+       common identifier.
+
+       The master file index is on the LASTNAME+FIRSTNAME fields.  The
+       transaction record is located by matching the master record UNIQUEID
+       to the MASTERID field of the transaction record.
+
+       The routine will read each master record and list all transactions
+       with the master record unique identifier.
+
+
+
+Program GSDMO_14             DBase File Maker
+
+       Program that creates a dBase file.
+
+       Demonstrates the use of GS_DB4Build to create a dBase file.  A
+       file 'MYFILE.DBF' will be created.
+
+
+
+Program GSDMO_15        DBase File and Memo Builder
+
+       This program creates a dBase file 'GSDMO_15.DBF with memo file
+       'GSDMO_15.DBT'.
+
+       New procedures/functions introduced are:
+
+                 DTOS
+                 MemoClear
+                 MemoInsLine
+                 MemoPut
+
+
+
+Program GSDMO_16    DBase File and Memo Editor (External)
+
+       This program reads a dBase file 'GSDMO_07.DBF with memo file
+       'GSDMO_07.DBT'.   It uses an external editor to work with the
+       memo fields.
+
+            --- WILL NOT COMPILE AS A WINDOWS APPLICATION ---
+
+
+
+
+
+
+
+
+
+
+                                      44
+                                                             Griffin Solutions
+
+
+Program GSDMO_17            DBase Status Checker
+
+
+       Demonstrates use of status checking for long duration operations
+
+       Several functions in HALCYON can take some time to complete
+       (e.g., IndexOn and Pack).  For this reason, a 'hook' is available
+       to allow the user to gain access and track progress.  The default
+       procedure DefCapStatus ignores the status.  If the user chooses to
+       take advantage of progress reporting, it is done by replacing
+       DefCapStatus with his or her own routines via SetStatusCapture.
+       The status may be ignored again later by setting the default
+       via SetCaptureStatus(DefCapStatus).
+
+       The following is an example of inserting a user-supplied status
+       reporting procedure.  This sample program demonstrates how this
+       procedure may be installed in a user's program.  All calls to
+       StatusUpdate anywhere in the file object's heirarchy will come
+       through this 'hook'.
+
+       Constants passed as arguments are contained in the GSOB_VAR unit,
+        they are:
+
+       StatusStart     = -1;   Signal¢ star“ of  status update information.
+
+       StatusStop      = 0;    Signals termination of status update.
+
+       StatusIndexTo   = 1;    Token for IndexTo as passing sor“ status.
+
+       StatusIndexWr   = 2;    Token for IndexTo as passin‡ writ† status.
+
+       StatusSort      = 5;    Token for Sort passing status information.
+
+       StatusCopy      = 6;    Token for Copy passing status information.
+
+       StatusPack      = 11;   Token for Pack passing status information.
+
+       GenFStatus      = 901;  Token for file record creation report.
+
+       The structure of a StatusUpdate call is:
+
+       StatusUpdate(statword1, statword2, statword3);
+
+       where the statword* values are type longint and will vary depending on
+       the contents of statword1.  For example:
+
+       if     statword1 = StatusStart
+       then:  statword2 = the calling routine token (StatusIndexTo or
+                          StatusPack.
+              statword3 = the number of records to be processed.
+
+
+
+
+                                      45
+Griffin Solutions
+
+
+       if     statword1 = StatusStop
+       then:  statword2 = 0
+              statword3 = 0
+
+       if      statword1 = StatusCopy/StatusIndexTo/StatusPack/StatusSort
+       then:   statword2 = current record number being processed
+               statword3 = 0
+
+       if      statword1 = StatusIndexWr
+       then:   statword2 = current record number being processed
+               statword3 = Pass number
+
+       New procedures/functions introduced are:
+ 
+                 DeleteRec
+                 Pack
+                 SetExclusiveOn
+                 SetStatusCapture
+
+
+
+Program GSDMO_18            DBase Error Handler
+
+       Demonstrates use of error handling for fatal errors.
+
+       The following is an example of inserting a user-supplied error
+       handling procedure.  This sample program demonstrates how this
+       procedure may be installed in a user's program.  All calls to
+       Error anywhere in the file object's heirarchy will come through
+       this 'hook'.
+
+       The program assigns a user-supplied routine to process run error
+       information.   A 'hook' is available to allow the user to gain
+       access to the runtime errors generated by Griffin Solutions objects.
+       The default procedure DefCapError halts the program using RunError.
+       If the user chooses to take advantage of error capture to allow
+       graceful recovery or shutdown, it is done by replacing DefCapError
+       with his or her own routines via SetErrorCapture.
+
+       Note that the assigned procedure must use far calls ($F+).
+
+       Griffin Solutions routines call Error for non-recoverable errors.
+       The call is:  Error(Code, Info).  Constants passed as arguments
+       are contained in the GSOB_VAR unit.  The User supplied program must
+       process the error using Code as the run error code.  Info provides
+       additional information about the error.
+
+       This example routine traps Error Code and Info arguments and then
+
+
+
+
+
+
+                                      46
+                                                             Griffin Solutions
+
+
+       translates to text by using an array of error code records.  Several
+       errors have been embedded in the program's main code that will
+       cause RunTime Errors to occur--can you find them all?
+       (answers at the end of the program list)
+
+
+
+Program GSDMO_19            DBase File Sorting
+
+       This program demonstrates how dBase files may be sorted using
+       Griffin Solutions units.
+
+       The program creates (if necessary) and opens a dBase file and its
+       memo. It then sorts the file to GSDMO19S.DBF and GSDMO19S.DBT.
+       The sort fields are LASTNAME and FIRSTNAME.
+
+       Records will only be sorted if they are valid (i.e., deleted records
+       are ignored if SetDeletedOn, and SetFilterThru must validate the
+       record as well).
+
+       New procedures/functions introduced are:
+
+                 SortTo
+
+
+
+Program GSDMO_20             DBase Reindexing
+
+       Unit to demonstrate Reindex. The indexes are first created and
+       listed.  The indexes are then reindexed and listed again to
+       show the Reindex procedure accurately reindexed all index files
+       assigned and maintained the proper master index order.
+
+       New procedures/functions introduced are:
+
+                 Reindex
+
+
+
+Program GSDMO_21       DBase File and Structure Copying
+
+       This program demonstrates how dBase files and file structures may
+       be copied using Griffin Solutions units.
+
+       The program creates (if necessary) and opens a dBase file and its
+       memo. It then copies the files to new file named GSDMO21A.DBF and
+       GSDMO21A.DBT.  Records will only be copied if they are valid (i.e.,
+       deleted records are ignored if SetDeletedOn, and SetFilterThru must
+       validate the record as well).  You can match the two files and see
+       that record 7 in GSDMO_21.DBF was not copied, because its deletion
+
+
+
+
+                                      47
+Griffin Solutions
+
+
+       flag was set before copying.
+
+       Next, the file structure only is copied to GSDMO21B.DBF and DBT.
+       This is useful to preserve the file structure for future use.
+
+       New procedures/functions introduced are:
+
+                 CopyTo
+                 CopyStructure
+
+
+
+Program GSDMO_22         Getting More Files Open
+
+       This unit demonstrates how to increase the number of files that can
+       be opened in a program.
+
+       The program will open all the *.PAS files in the current directory.
+       The procedure SetFileHandles() will allow the program to open as
+       many files as needed at the same time, up to the number passed as
+       the argument (not to exceed 255).  This number cannot exceed the
+        value given in the FILES= command in the AUTOEXEC.BAT file.
+
+       New procedures/functions introduced are:
+
+                 SetFileHandles
+
+
+
+Program GSDMO_23              DBase Filters
+
+       This program demonstrates how the programmer may set filters to
+       determine what records to read from the file.
+
+       The program will assign the routine FilterName as a filter for
+       GSDMO_23.DBF by using SetFilterThru(FilterName).  This routine
+       will return true if the record's LASTNAME field begins with a
+       letter lower than 'M'.
+
+       After listing all names that are alphabetically less than M, the
+       filter is turned 'off' by resetting it to its default routine by
+       SetFilterThru(DefFilterCk).  The file is then listed to show all
+       records.
+
+       Note that SetFilterThru should not be called until a file has been
+       assigned to the selected file area through Use.  If no file has
+       been assigned, Error 1008, Object is not initialized in file area,
+       will halt the program.
+
+
+
+
+
+
+                                      48
+                                                             Griffin Solutions
+
+
+       New procedures/functions introduced are:
+
+                 SetFilterThru
+
+
+
+Program GSDMO_ED                DBase Editor
+
+       This program demonstrates how to edit a dBase memo file using
+       Griffin Solutions units.
+
+       If the GSDMO_07.DBF file does not exist, the program will display a
+       a message that the file was not found and to run GSDMO_07 to make
+       the file.
+
+          ------    CANNOT BE USED IN A WINDOWS ENVIRONMENT   ------
+
+
+
+Program GSDMO_VU                 DBase Viewer
+
+       This program demonstrates how to view a dBase memo file using
+       Griffin Solutions units.
+
+       If the GSDMO_07.DBF file does not exist, the program will display a
+       a message that the file was not found and to run GSDMO_07 to make
+       the file.
+
+          ------    CANNOT BE USED IN A WINDOWS ENVIRONMENT   ------
+
+
+
+Program GSDMOTV1              DBase File Display
+                             TurboVision Sample 1
+
+       This program demonstrates that the basic Griffin Solutions
+       routines will work in a TurboVision environment.  This demo
+       modifies one of the TP 6 TurboVision documentation programs
+       to use a dBase file.
+
+       Procedure ReadFile loads the dBase records into an array for
+       display and then closes the file.
+ 
+       Memory is at a premium in the IDE using TurboVision.  If you
+       get heap overflow errors or 'strange' things happen, if probably
+       means there is not enough memory to run in the IDE.  To regain
+       memory, you can compile to disk instead of memory.
+
+          ------    CANNOT BE USED IN A WINDOWS ENVIRONMENT   ------
+
+
+
+
+
+                                      49
+Griffin Solutions
+
+
+Program GSDMOTV2              DBase File Display
+                             TurboVision Sample 2
+
+       This program demonstrates that the basic Griffin Solutions
+       routines will work in a TurboVision environment.
+
+       This demo provides a file viewer using TurboVision methods.
+       One unit, GSV_FLDS.PAS is also used for improved inputline
+       support.
+
+          ------    CANNOT BE USED IN A WINDOWS ENVIRONMENT   ------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      50

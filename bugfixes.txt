@@ -1,0 +1,49 @@
+Bug report for Halcyon/2 3.5 r1 (ad 17/12/1996)
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴�
+
+ DLL SUPPORT works fine under Dos and Uindous but under Os/2 and LsxPower it
+ doesn't. I don't know why, it's about a week i'm trying to fix it... 
+ i'm thinkink there's a bug somewhere but not in my code ;-)
+
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+
+ As you see IN VDB_FLAG.INC it's possible to compile VRGDBENG.PAS in 3 ways:
+
+  - FINALDLL: optimized for a dynamic use of Halcyon under Dos, DPMI and Os/2.
+ You could use the import unit VRGDBSHL.PAS that let you load  dynamically all
+ functions you need. All functions are exported using standard Borland 
+ definitions; see source code for more.
+ DOS and WINDOWS support works only using this flag.
+
+ NOTE THAT FINALDLL IS REQUIRED ALSO TO COMPILE DLLs WITH USELIB & USELIBSHL
+ FLAGS; REMEMBER ALSO TO COMMENT FINAL FLAG BEFORE BUILDING DLLs SUPPORT!
+
+ - USELIB: optimized for a static linking of VRGDBENG.DLL under Os/2.
+ This mode export System and GSOBSHEL routines. 
+ AT THIS TIME IT DOESN'T WORK UNDER OS/2, I DON'T KNOW WHY! see later for more!
+
+ - USELIB: optimized for a static linking of VRGDBENG.DLL under Os/2.
+ This mode exports System and all Halcyon/2 units. 
+ AT THIS TIME IT DOESN'T WORK UNDER OS/2, I DON'T KNOW WHY! see later for more!
+
+
+
+ PROBLEM WITH DLL SUPPORT UNDER vp/2:
+ After a lot of testing i've seen that USE procedure in GSOBSHEL.PAS doesn't
+ work; i mean that it's not eable to create new objects for databases and the 
+ program exits with a SYS2070 or another similar error. I'm not eable to fix it
+ only because i'm not eable to understand why this happens! It's my first test
+ with DLLs so probably i'm doing something wrong! Uder Dos DLL support is quite 
+ simple, but under Vp/2 it's not!
+
+ Another thing: remember that under LsxPower only LX dlls are supported, 
+ Vp/2 doesn't support NE Dlls, so if you need Halcyon/2 work under Dos 
+ don't use unsupported functions. I'll try to fix this problem later ... at
+ this time you couldn't use al all Halcyon/2 Dll under Vp/2! :-(
+
+
+
+
+                     If you could help me, please tellme!
+
+
